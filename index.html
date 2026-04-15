@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2BAC English Master — Morocco's #1 English Learning Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600&display=swap');
+
+  :root {
+    --primary: #1e3a5f;
+    --accent: #3b82f6;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .ar {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    position: fixed; top: 0; left: 0;
+    width: 260px; height: 100vh;
+    background: var(--primary);
+    overflow-y: auto;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: flex; flex-direction: column;
+  }
+
+  #sidebar .logo {
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  #sidebar .logo h1 {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  #sidebar .logo p { color: #93c5fd; font-size: 0.75rem; margin-top: 4px; }
+
+  #sidebar nav { flex: 1; padding: 16px 0; }
+
+  #sidebar nav .nav-section {
+    padding: 8px 20px 4px;
+    color: #93c5fd;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  #sidebar nav a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+  }
+
+  #sidebar nav a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  #sidebar nav a.active { background: rgba(59,130,246,0.2); color: #60a5fa; border-left-color: #3b82f6; }
+
+  #sidebar nav a .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+  /* MAIN */
+  #main { margin-left: 260px; min-height: 100vh; }
+
+  /* TOP BAR */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(248,250,252,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .topbar .breadcrumb { color: var(--muted); font-size: 0.875rem; }
+  .topbar .breadcrumb span { color: var(--text); font-weight: 600; }
+
+  .progress-global {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.8rem; color: var(--muted);
+  }
+
+  .progress-bar-wrap {
+    width: 160px; height: 8px;
+    background: var(--border);
+    border-radius: 999px; overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #6366f1);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+
+  /* SECTIONS */
+  .section { display: none; padding: 32px; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #4f46e5 100%);
+    border-radius: 20px;
+    padding: 56px 48px;
+    color: #fff;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .hero h2 { font-size: 2.25rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+  .hero p { font-size: 1.05rem; color: #bfdbfe; max-width: 560px; margin-bottom: 28px; }
+
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .badge {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+
+  .card-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 20px; gap: 16px;
+  }
+
+  .card-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+  .card-subtitle { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+  /* UNIT LABEL */
+  .unit-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* PASSAGE */
+  .passage {
+    background: #f8fafc;
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: #334155;
+  }
+
+  .passage h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* QUESTIONS */
+  .questions-section { margin-top: 24px; }
+  .questions-section h4 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+
+  .question-item { margin-bottom: 20px; }
+  .question-text { font-weight: 600; font-size: 0.925rem; margin-bottom: 10px; color: var(--text); }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    text-align: left;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .option-btn:hover { border-color: var(--accent); background: #eff6ff; }
+  .option-btn.correct { border-color: var(--success); background: #d1fae5; color: #065f46; }
+  .option-btn.wrong { border-color: var(--danger); background: #fee2e2; color: #7f1d1d; }
+  .option-btn.disabled { pointer-events: none; }
+
+  .feedback {
+    margin-top: 8px; padding: 8px 14px;
+    border-radius: 8px; font-size: 0.82rem;
+    display: none;
+  }
+
+  .feedback.show { display: block; }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 3px solid var(--success); }
+  .feedback.wrong { background: #fee2e2; color: #7f1d1d; border-left: 3px solid var(--danger); }
+
+  /* TRUE/FALSE */
+  .tf-row { display: flex; gap: 10px; }
+
+  .tf-btn {
+    flex: 1; padding: 10px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .tf-btn:hover { border-color: var(--accent); }
+  .tf-btn.correct { border-color: var(--success); background: #d1fae5; color: #065f46; }
+  .tf-btn.wrong { border-color: var(--danger); background: #fee2e2; color: #7f1d1d; }
+  .tf-btn.disabled { pointer-events: none; }
+
+  /* SHORT ANSWER */
+  .short-answer-input {
+    width: 100%; padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .short-answer-input:focus { border-color: var(--accent); }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-success:hover { background: #059669; }
+
+  .btn-warning { background: var(--warning); color: #fff; }
+  .btn-warning:hover { background: #d97706; }
+
+  .btn-sm { padding: 7px 14px; font-size: 0.8rem; }
+
+  .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+  /* VOCAB */
+  .vocab-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px; margin-top: 16px;
+  }
+
+  .vocab-card {
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+  }
+
+  .vocab-card:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(59,130,246,0.1); }
+
+  .vocab-word {
+    font-weight: 700; font-size: 1rem; color: var(--primary);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .vocab-def {
+    display: none; margin-top: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    border-top: 1px solid var(--border); padding-top: 8px;
+  }
+
+  .vocab-def.show { display: block; }
+  .vocab-type { font-size: 0.7rem; color: var(--accent); font-weight: 600; margin-top: 4px; }
+
+  /* WRITING */
+  .writing-prompt {
+    background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .writing-prompt h5 { font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+
+  .model-answer {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .model-answer.show { display: block; }
+  .model-answer h5 { font-weight: 700; color: var(--success); margin-bottom: 10px; }
+  .model-answer p { font-size: 0.9rem; line-height: 1.9; color: #334155; }
+
+  /* ACCORDION */
+  .accordion-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: #fff;
+    transition: background 0.2s;
+    font-weight: 600; font-size: 0.9rem;
+  }
+
+  .accordion-header:hover { background: #f8fafc; }
+  .accordion-arrow { transition: transform 0.3s; font-size: 0.8rem; }
+  .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+  .accordion-body {
+    display: none; padding: 16px 20px;
+    background: #f8fafc;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem; color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .accordion-item.open .accordion-body { display: block; animation: fadeIn 0.3s ease; }
+
+  /* EXAM */
+  .exam-header {
+    background: linear-gradient(135deg, #1e3a5f, #1e40af);
+    color: #fff; border-radius: 16px; padding: 28px;
+    margin-bottom: 24px;
+  }
+
+  .exam-header h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+  .exam-header p { color: #bfdbfe; font-size: 0.875rem; }
+
+  .exam-meta { display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap; }
+  .exam-meta-item { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: #93c5fd; }
+
+  .score-display {
+    background: linear-gradient(135deg, #d1fae5, #ecfdf5);
+    border: 2px solid var(--success);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .score-display.show { display: block; }
+  .score-number { font-size: 3.5rem; font-weight: 800; color: var(--success); }
+  .score-label { font-size: 1rem; color: var(--muted); margin-top: 4px; }
+  .score-msg { margin-top: 12px; font-size: 1rem; font-weight: 600; color: var(--text); }
+
+  /* STATS */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px; margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    text-align: center;
+  }
+
+  .stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; font-weight: 500; }
+
+  /* UNIT GRID */
+  .units-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .unit-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    cursor: pointer; transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+
+  .unit-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+  .unit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #3b82f6, #6366f1); }
+
+  .unit-num { font-size: 0.75rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+  .unit-card h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin: 6px 0 8px; }
+  .unit-card p { font-size: 0.8rem; color: var(--muted); }
+
+  .unit-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { background: #f1f5f9; color: #475569; font-size: 0.7rem; padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+
+  /* MOBILE TOGGLE */
+  .menu-toggle {
+    display: none;
+    position: fixed; top: 16px; left: 16px;
+    z-index: 2000;
+    background: var(--primary);
+    color: #fff; border: none;
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-items: center; justify-content: center;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    .menu-toggle { display: flex; }
+    .overlay.show { display: block; }
+    .section { padding: 20px 16px; }
+    .hero { padding: 32px 24px; }
+    .hero h2 { font-size: 1.6rem; }
+    .topbar { padding: 12px 16px 12px 72px; }
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* HIGHLIGHT */
+  mark { background: #fef9c3; padding: 1px 3px; border-radius: 3px; }
+
+  /* ANSWER REVEAL */
+  .answer-reveal { display: none; }
+  .answer-reveal.show { display: block; animation: fadeIn 0.3s ease; }
+
+  .answer-box {
+    background: #fffbeb; border: 1px solid #fcd34d;
+    border-radius: 10px; padding: 14px 18px;
+    margin-top: 10px; font-size: 0.875rem;
+    color: #78350f;
+  }
+
+  .answer-box strong { color: #92400e; }
+
+  /* LANG TOGGLE */
+  .lang-pill {
+    display: inline-flex;
+    background: #f1f5f9; border-radius: 999px;
+    padding: 3px;
+  }
+
+  .lang-pill button {
+    border: none; background: transparent;
+    padding: 5px 14px; border-radius: 999px;
+    font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lang-pill button.active { background: var(--primary); color: #fff; }
+
+  .ar-content { display: none; }
+  .ar-content.show { display: block; }
+
+  /* SCROLLBAR */
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+  /* EXAM RADIO */
+  .exam-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px; margin-bottom: 8px;
+    cursor: pointer; transition: all 0.2s;
+    font-size: 0.875rem;
+  }
+
+  .exam-option:hover { border-color: var(--accent); background: #eff6ff; }
+  .exam-option input { accent-color: var(--accent); width: 16px; height: 16px; }
+  .exam-option.correct-ans { border-color: var(--success); background: #d1fae5; }
+  .exam-option.wrong-ans { border-color: var(--danger); background: #fee2e2; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 1.6rem; font-weight: 800; color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .section-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+  /* TAB */
+  .tab-row { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 18px; border: 2px solid var(--border);
+    border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; background: #fff; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  .unit-content { display: none; }
+  .unit-content.active { display: block; animation: fadeIn 0.3s ease; }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="logo">
+    <h1>📚 2BAC English</h1>
+    <p>Morocco's Premier Learning Platform</p>
+  </div>
+  <nav>
+    <div class="nav-section">OVERVIEW</div>
+    <a onclick="showSection('home')" class="active" id="nav-home"><span class="icon">🏠</span> Dashboard</a>
+    <a onclick="showSection('tips')" id="nav-tips"><span class="icon">💡</span> Study Tips</a>
+
+    <div class="nav-section">UNITS</div>
+    <a onclick="showSection('units')" id="nav-units"><span class="icon">📖</span> All Units</a>
+    <a onclick="showSection('unit1')" id="nav-unit1"><span class="icon">1️⃣</span> Unit 1 — Technology</a>
+    <a onclick="showSection('unit2')" id="nav-unit2"><span class="icon">2️⃣</span> Unit 2 — Environment</a>
+    <a onclick="showSection('unit3')" id="nav-unit3"><span class="icon">3️⃣</span> Unit 3 — Globalization</a>
+    <a onclick="showSection('unit4')" id="nav-unit4"><span class="icon">4️⃣</span> Unit 4 — Youth & Society</a>
+    <a onclick="showSection('unit5')" id="nav-unit5"><span class="icon">5️⃣</span> Unit 5 — Education</a>
+    <a onclick="showSection('unit6')" id="nav-unit6"><span class="icon">6️⃣</span> Unit 6 — Health</a>
+    <a onclick="showSection('unit7')" id="nav-unit7"><span class="icon">7️⃣</span> Unit 7 — Media</a>
+    <a onclick="showSection('unit8')" id="nav-unit8"><span class="icon">8️⃣</span> Unit 8 — Human Rights</a>
+    <a onclick="showSection('unit9')" id="nav-unit9"><span class="icon">9️⃣</span> Unit 9 — Science</a>
+    <a onclick="showSection('unit10')" id="nav-unit10"><span class="icon">🔟</span> Unit 10 — Cultural Identity</a>
+
+    <div class="nav-section">WRITING</div>
+    <a onclick="showSection('writing')" id="nav-writing"><span class="icon">✍️</span> Writing Skills</a>
+
+    <div class="nav-section">EXAMS</div>
+    <a onclick="showSection('exam1')" id="nav-exam1"><span class="icon">📝</span> Practice Exam 1</a>
+    <a onclick="showSection('exam2')" id="nav-exam2"><span class="icon">📝</span> Practice Exam 2</a>
+    <a onclick="showSection('exam3')" id="nav-exam3"><span class="icon">📝</span> Practice Exam 3</a>
+  </nav>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="breadcrumb">2BAC English Master / <span id="currentSection">Dashboard</span></div>
+    <div class="progress-global">
+      <span>Overall Progress</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgress" style="width:0%"></div>
+      </div>
+      <span id="progressText">0%</span>
+    </div>
+  </div>
+
+  <!-- ====== HOME ====== -->
+  <div class="section active" id="home">
+    <div class="hero">
+      <h2>Master English for<br>Moroccan BAC 2025</h2>
+      <p>Interactive lessons, practice exams, vocabulary builders, and writing guides — all designed specifically for 2BAC students targeting A2→B1→B2.</p>
+      <div class="badge-row">
+        <span class="badge">🎓 10 Complete Units</span>
+        <span class="badge">📝 3 Practice Exams</span>
+        <span class="badge">📚 200+ Vocabulary Items</span>
+        <span class="badge">✍️ Model Writing Answers</span>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-number">10</div><div class="stat-label">Interactive Units</div></div>
+      <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Full Practice Exams</div></div>
+      <div class="stat-card"><div class="stat-number">60+</div><div class="stat-label">Interactive Questions</div></div>
+      <div class="stat-card"><div class="stat-number">200+</div><div class="stat-label">BAC Vocabulary Words</div></div>
+      <div class="stat-card"><div class="stat-number">B1→B2</div><div class="stat-label">Target Level</div></div>
+      <div class="stat-card"><div class="stat-number" id="answeredCount">0</div><div class="stat-label">Your Answers Today</div></div>
+    </div>
+
+    <h2 class="section-title">Browse Units</h2>
+    <div class="units-grid">
+      <div class="unit-card" onclick="showSection('unit1')"><div class="unit-num">UNIT 01</div><h3>Technology & Digital World</h3><p>AI, social media, privacy in the digital age</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Vocab</span><span class="tag">Writing</span></div></div>
+      <div class="unit-card" onclick="showSection('unit2')"><div class="unit-num">UNIT 02</div><h3>Environment & Climate Change</h3><p>Global warming, renewable energy, sustainability</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">True/False</span><span class="tag">MCQ</span></div></div>
+      <div class="unit-card" onclick="showSection('unit3')"><div class="unit-num">UNIT 03</div><h3>Globalization & Its Impact</h3><p>Trade, culture, inequality, economic shifts</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Vocab</span></div></div>
+      <div class="unit-card" onclick="showSection('unit4')"><div class="unit-num">UNIT 04</div><h3>Youth & Society</h3><p>Identity, peer pressure, civic engagement</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">MCQ</span></div></div>
+      <div class="unit-card" onclick="showSection('unit5')"><div class="unit-num">UNIT 05</div><h3>Education Systems</h3><p>Reform, online learning, equal access</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Writing</span></div></div>
+      <div class="unit-card" onclick="showSection('unit6')"><div class="unit-num">UNIT 06</div><h3>Health & Medicine</h3><p>Public health, pandemics, medical breakthroughs</p><div class="unit-tags"><span class="tag">MCQ</span><span class="tag">Vocab</span></div></div>
+      <div class="unit-card" onclick="showSection('unit7')"><div class="unit-num">UNIT 07</div><h3>Media & Fake News</h3><p>Journalism, censorship, digital literacy</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">True/False</span></div></div>
+      <div class="unit-card" onclick="showSection('unit8')"><div class="unit-num">UNIT 08</div><h3>Human Rights & Justice</h3><p>Equality, freedoms, international law</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">MCQ</span></div></div>
+      <div class="unit-card" onclick="showSection('unit9')"><div class="unit-num">UNIT 09</div><h3>Science & Innovation</h3><p>Space exploration, biotech, ethics of science</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Vocab</span></div></div>
+      <div class="unit-card" onclick="showSection('unit10')"><div class="unit-num">UNIT 10</div><h3>Cultural Identity & Heritage</h3><p>Moroccan culture, Amazigh identity, traditions</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Writing</span></div></div>
+    </div>
+  </div>
+
+  <!-- ====== TIPS ====== -->
+  <div class="section" id="tips">
+    <h1 class="section-title">💡 Study Tips & Exam Strategies</h1>
+    <p class="section-desc">Master BAC English with these expert-curated strategies. Click each topic to expand.</p>
+
+    <div class="card">
+      <div class="card-title">🧠 General Study Tips</div>
+      <div style="margin-top:16px">
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">📅 Create a Study Schedule <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body">Dedicate at least 45 minutes daily to English. Divide your time: 15 min reading, 15 min vocabulary, 15 min writing/grammar. Consistency beats intensity. Study every day rather than cramming the night before. The BAC rewards students who develop habits, not last-minute memorizers. Use the spaced repetition technique — review vocabulary after 1 day, 3 days, 1 week, and 1 month for maximum retention.</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">📖 How to Read Passages Effectively <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body">Always read the questions FIRST before reading the passage. This activates your brain to search for relevant information. Underline key words in both the question and the passage. For True/False questions, look for absolutes like "always," "never," "all" — these are often false. The answer to comprehension questions is almost always in the text — trust the text, not your prior knowledge.</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">✍️ Writing: The BAC Formula <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body"><strong>Paragraph structure (PEEL):</strong><br>• Point — state your main idea<br>• Evidence — support with facts/examples<br>• Explain — elaborate on how the evidence supports your point<br>• Link — connect back to the question or transition to next point<br><br>For a 150-word essay: 1 intro paragraph + 2 body paragraphs + 1 conclusion. Never start your essay with "I." Start with a general statement about the topic. Always include connectors: however, furthermore, in addition, consequently, therefore.</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">🔤 Vocabulary Building Strategy <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body">Learn words in CONTEXT, not in isolation. When you encounter a new word: (1) guess meaning from context, (2) look it up, (3) write an example sentence, (4) note its part of speech. For BAC, focus on: academic words, topic-specific vocabulary, collocations (words that go together), and word families (e.g., educate → education → educational → educator). Aim to learn 10 new words per day.</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">🎯 Exam Day Strategies <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body">Time management is critical: spend no more than 20 minutes on reading comprehension, 25 minutes on language components, and 30 minutes on writing. Always attempt ALL questions — there's no penalty for wrong answers. Check your writing for: subject-verb agreement, correct tense use, article usage (a/an/the), and spelling of key BAC vocabulary. Re-read your essay once before submitting. Write neatly — presentation matters.</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">🇲🇦 Moroccan Context in BAC Topics <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body">BAC examiners love when you reference Moroccan reality in your writing. Connect global topics to Morocco: mention the Green Plan for environment, e-government for technology, the 2004 Moudawwana reform for human rights, INDH for social justice, and Morocco's role in COP for climate. This shows higher-order thinking and impresses examiners. Use Morocco as your example when possible — it demonstrates real-world application.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 Grammar Quick Reference</div>
+      <div style="margin-top:16px">
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">⏰ Tense Review — The Most Tested Forms <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body"><strong>Present Perfect:</strong> Use for past actions with present relevance. "Scientists have discovered a new vaccine." Signal words: already, just, yet, ever, never, since, for.<br><br><strong>Passive Voice:</strong> Object + to be + past participle. "The environment is being damaged by pollution." BAC LOVES passive voice in scientific/social topics.<br><br><strong>Reported Speech:</strong> "I am studying" → She said she was studying. Change pronouns + tenses back one step. "will" → "would", "am/is/are" → "was/were".<br><br><strong>Conditionals:</strong><br>• Type 1 (real): If + present simple, will + infinitive<br>• Type 2 (unreal): If + past simple, would + infinitive<br>• Type 3 (impossible): If + past perfect, would have + past participle</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">🔗 Connectors & Discourse Markers <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body"><strong>Addition:</strong> furthermore, moreover, in addition, besides, also<br><strong>Contrast:</strong> however, nevertheless, on the other hand, although, despite<br><strong>Cause:</strong> because, since, as, due to, owing to<br><strong>Effect:</strong> therefore, consequently, as a result, thus, hence<br><strong>Illustration:</strong> for example, for instance, such as, namely<br><strong>Concession:</strong> although, even though, while, whereas<br><strong>Conclusion:</strong> in conclusion, to sum up, overall, in brief<br><br>Using varied connectors is the #1 way to score higher in writing.</div>
+        </div>
+        <div class="accordion-item" onclick="toggleAccordion(this)">
+          <div class="accordion-header">📊 Word Formation & Derivation <span class="accordion-arrow">▼</span></div>
+          <div class="accordion-body">BAC regularly tests word formation. Know these patterns:<br><br><strong>Noun suffixes:</strong> -tion (pollution), -ment (development), -ness (awareness), -ity (equality), -ism (globalism), -er/-or (researcher)<br><br><strong>Adjective suffixes:</strong> -al (environmental), -ful (harmful), -less (powerless), -ous (dangerous), -ive (creative), -able (sustainable)<br><br><strong>Verb suffixes:</strong> -ize/-ise (modernize), -ify (justify), -en (strengthen)<br><br><strong>Adverb:</strong> usually adjective + -ly (significantly, consequently)<br><br>Practice: environment → environmental → environmentalist → environmentally</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNITS OVERVIEW ====== -->
+  <div class="section" id="units">
+    <h1 class="section-title">📖 All Units</h1>
+    <p class="section-desc">Choose a unit to begin your interactive study session.</p>
+    <div class="units-grid">
+      <div class="unit-card" onclick="showSection('unit1')"><div class="unit-num">UNIT 01</div><h3>Technology & Digital World</h3><p>AI, social media, privacy in the digital age</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Vocab</span><span class="tag">Writing</span></div></div>
+      <div class="unit-card" onclick="showSection('unit2')"><div class="unit-num">UNIT 02</div><h3>Environment & Climate Change</h3><p>Global warming, renewable energy, sustainability</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">True/False</span><span class="tag">MCQ</span></div></div>
+      <div class="unit-card" onclick="showSection('unit3')"><div class="unit-num">UNIT 03</div><h3>Globalization & Its Impact</h3><p>Trade, culture, inequality, economic shifts</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Vocab</span></div></div>
+      <div class="unit-card" onclick="showSection('unit4')"><div class="unit-num">UNIT 04</div><h3>Youth & Society</h3><p>Identity, peer pressure, civic engagement</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">MCQ</span></div></div>
+      <div class="unit-card" onclick="showSection('unit5')"><div class="unit-num">UNIT 05</div><h3>Education Systems</h3><p>Reform, online learning, equal access</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Writing</span></div></div>
+      <div class="unit-card" onclick="showSection('unit6')"><div class="unit-num">UNIT 06</div><h3>Health & Medicine</h3><p>Public health, pandemics, medical breakthroughs</p><div class="unit-tags"><span class="tag">MCQ</span><span class="tag">Vocab</span></div></div>
+      <div class="unit-card" onclick="showSection('unit7')"><div class="unit-num">UNIT 07</div><h3>Media & Fake News</h3><p>Journalism, censorship, digital literacy</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">True/False</span></div></div>
+      <div class="unit-card" onclick="showSection('unit8')"><div class="unit-num">UNIT 08</div><h3>Human Rights & Justice</h3><p>Equality, freedoms, international law</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">MCQ</span></div></div>
+      <div class="unit-card" onclick="showSection('unit9')"><div class="unit-num">UNIT 09</div><h3>Science & Innovation</h3><p>Space exploration, biotech, ethics of science</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Vocab</span></div></div>
+      <div class="unit-card" onclick="showSection('unit10')"><div class="unit-num">UNIT 10</div><h3>Cultural Identity & Heritage</h3><p>Moroccan culture, Amazigh identity, traditions</p><div class="unit-tags"><span class="tag">Reading</span><span class="tag">Writing</span></div></div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 1 ====== -->
+  <div class="section" id="unit1">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 1: Technology & The Digital World</h1><p class="section-desc" style="margin-bottom:0">Artificial Intelligence, Privacy, and the Future of Human Connection</p></div>
+      <span class="unit-label">📱 UNIT 01</span>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u1','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u1','vocab',this)">📚 Vocabulary</button>
+      <button class="tab-btn" onclick="switchTab('u1','writing',this)">✍️ Writing</button>
+      <button class="tab-btn" onclick="switchTab('u1','arabic',this)">🌐 Arabic Support</button>
+    </div>
+
+    <!-- READING TAB -->
+    <div class="unit-content active" id="u1-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: The Double-Edged Sword of Artificial Intelligence</h4>
+          <p>Artificial intelligence (AI) has emerged as one of the most transformative forces of the twenty-first century, reshaping industries, redefining human interaction, and challenging our fundamental understanding of intelligence itself. From healthcare diagnostics to autonomous vehicles, from personalized education to predictive policing, AI systems are increasingly embedded in the fabric of modern life. Morocco, like many developing nations, stands at a critical juncture: embracing AI's potential while navigating its profound ethical and social challenges.</p>
+          <p style="margin-top:12px">Proponents of AI argue that its benefits are immeasurable. In medicine, machine learning algorithms can detect cancerous tumors with greater accuracy than experienced radiologists, potentially saving millions of lives. In agriculture, AI-powered drones and sensors enable precision farming, optimizing water use and increasing crop yields — a development of particular significance for Morocco's Green Plan. Educational platforms powered by AI can adapt to individual student learning styles, democratizing access to quality education across remote regions where qualified teachers are scarce.</p>
+          <p style="margin-top:12px">However, critics warn of serious dangers lurking beneath AI's promising surface. Mass unemployment is perhaps the most immediate concern: McKinsey Global Institute estimates that automation could displace up to 800 million workers worldwide by 2030. Algorithmic bias is another critical issue — when AI systems are trained on historically biased data, they perpetuate and amplify existing inequalities, disadvantaging marginalized communities in hiring, lending, and criminal justice. Privacy erosion represents a third major threat: surveillance technologies powered by facial recognition are already being deployed in ways that fundamentally undermine civil liberties.</p>
+          <p style="margin-top:12px">The philosophical dimension of AI raises questions that humanity has never previously confronted. If a machine can compose music, write poetry, diagnose illness, and make moral judgments, what uniquely defines human intelligence? Scholars like Nick Bostrom warn of existential risks if superintelligent AI systems develop goals misaligned with human values. Others, like Yann LeCun, advocate for responsible AI development, arguing that fears of superintelligence are premature and that the real challenge is creating AI that is robust, fair, and transparent.</p>
+          <p style="margin-top:12px">Ultimately, the trajectory of AI will be determined not by the technology itself, but by the human choices surrounding its development and deployment. Robust regulation, inclusive design, and international cooperation are essential if humanity is to harness AI's extraordinary potential while protecting fundamental rights and values. Morocco's emerging AI strategy, announced by the government in recent years, reflects a growing recognition that nations must actively shape their technological destinies rather than passively accepting them.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Comprehension Questions</h4>
+
+          <!-- Q1 MCQ -->
+          <div class="question-item">
+            <div class="question-text">1. According to the passage, what is one major benefit of AI in medicine?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','AI replaces all doctors in hospitals.')">A. AI replaces all doctors in hospitals.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','AI detects tumors more accurately than radiologists.')">B. AI detects tumors more accurately than radiologists.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','AI provides free medicine to patients.')">C. AI provides free medicine to patients.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','AI eliminates the need for clinical trials.')">D. AI eliminates the need for clinical trials.</button>
+            </div>
+            <div class="feedback" id="fb-u1-q1"></div>
+          </div>
+
+          <!-- Q2 MCQ -->
+          <div class="question-item">
+            <div class="question-text">2. What does "algorithmic bias" refer to in this passage?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','The preference AI has for certain programming languages.')">A. The preference AI has for certain programming languages.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','The speed difference between AI and human decision-making.')">B. The speed difference between AI and human decision-making.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','AI systems perpetuating inequalities from biased training data.')">C. AI systems perpetuating inequalities from biased training data.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','AI deliberately programmed to favor certain groups.')">D. AI deliberately programmed to favor certain groups.</button>
+            </div>
+            <div class="feedback" id="fb-u1-q2"></div>
+          </div>
+
+          <!-- Q3 True/False -->
+          <div class="question-item">
+            <div class="question-text">3. True or False: Nick Bostrom and Yann LeCun share the same view about the dangers of superintelligent AI.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'false','False. Bostrom warns of existential risks, while LeCun believes fears of superintelligence are premature.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! They hold opposing views. Bostrom warns of existential risks; LeCun says these fears are premature.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u1-q3"></div>
+          </div>
+
+          <!-- Q4 True/False -->
+          <div class="question-item">
+            <div class="question-text">4. True or False: The passage suggests that Morocco has announced an AI strategy.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The passage states Morocco has an emerging AI strategy announced in recent years.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'false','False. The passage explicitly mentions Morocco\'s emerging AI strategy.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u1-q4"></div>
+          </div>
+
+          <!-- Q5 Short Answer -->
+          <div class="question-item">
+            <div class="question-text">5. In your own words, explain why the author calls AI a "double-edged sword." (Short Answer)</div>
+            <textarea class="short-answer-input" rows="3" placeholder="Type your answer here..." style="width:100%;resize:vertical;border:2px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-family:Inter,sans-serif;font-size:0.875rem;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u1-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u1-answers')">🙈 Hide Answers</button>
+        </div>
+
+        <div class="answer-reveal" id="u1-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — AI detects cancerous tumors with greater accuracy than experienced radiologists.</div>
+          <div class="answer-box"><strong>Q2:</strong> C — When AI systems are trained on historically biased data, they perpetuate and amplify existing inequalities in areas like hiring, lending, and criminal justice.</div>
+          <div class="answer-box"><strong>Q3:</strong> FALSE — Bostrom warns of existential risks from superintelligent AI, while LeCun considers these fears premature.</div>
+          <div class="answer-box"><strong>Q4:</strong> TRUE — The passage states Morocco has an emerging AI strategy announced by the government.</div>
+          <div class="answer-box"><strong>Q5 Model:</strong> The author calls AI a "double-edged sword" because it has significant benefits (medical diagnosis, precision farming, personalized education) but also serious dangers (unemployment, algorithmic bias, privacy erosion). Like a sword, it can both protect and harm depending on how it is used.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOCAB TAB -->
+    <div class="unit-content" id="u1-vocab">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">📚 Unit 1 Vocabulary</div><div class="card-subtitle">Click any word to reveal its definition</div></div>
+          <button class="btn btn-primary btn-sm" onclick="revealAllVocab('u1-vocab-grid')">Reveal All</button>
+        </div>
+        <div class="vocab-grid" id="u1-vocab-grid">
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">transformative <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Causing a major and significant change. <em>"AI has a transformative effect on society."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">autonomous <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Self-governing; acting independently without human control. <em>"Autonomous vehicles can drive without a human driver."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">algorithm <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">A set of rules or steps a computer follows to solve a problem. <em>"The algorithm analyzed thousands of data points."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">perpetuate <span>+</span></div><div class="vocab-type">verb</div><div class="vocab-def">To make something continue indefinitely. <em>"Biased systems perpetuate social inequality."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">marginalized <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Pushed to the edges of society; having less power or rights. <em>"Marginalized communities suffer most from discrimination."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">surveillance <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Close observation, especially by authorities. <em>"Facial recognition enables mass surveillance."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">democratizing <span>+</span></div><div class="vocab-type">verb</div><div class="vocab-def">Making something accessible to everyone. <em>"The internet is democratizing access to knowledge."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">existential <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Relating to human existence or threatening existence itself. <em>"Superintelligent AI poses an existential risk."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">robust <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Strong and effective in a wide range of conditions. <em>"We need robust regulation of AI technology."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">juncture <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">A critical point in time; a turning point. <em>"Morocco is at a critical juncture in its development."</em></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WRITING TAB -->
+    <div class="unit-content" id="u1-writing">
+      <div class="card">
+        <div class="card-title">✍️ Writing Task — Unit 1</div>
+        <div class="writing-prompt" style="margin-top:16px">
+          <h5>📝 Essay Prompt</h5>
+          <p style="font-size:0.9rem;color:#1e40af;margin-top:8px">"Artificial intelligence offers enormous benefits, but it also poses serious threats to society." Write a well-organized essay (150–180 words) discussing BOTH the advantages and disadvantages of AI, with reference to real examples.</p>
+          <div style="margin-top:12px;font-size:0.8rem;color:#64748b"><strong>Tip:</strong> Use connectors (however, furthermore, on the other hand). Include at least 2 specific examples. Follow the PEEL structure.</div>
+        </div>
+        <button class="btn btn-success" onclick="toggleModelAnswer('u1-model')">📄 Show Model Answer</button>
+        <div class="model-answer" id="u1-model" style="margin-top:16px">
+          <h5>✅ Model Answer (B1-B2 Level)</h5>
+          <p>The rapid advancement of artificial intelligence has sparked both excitement and concern across the globe. On one hand, AI offers remarkable benefits that could transform human life for the better. In medicine, AI algorithms can detect diseases like cancer with unprecedented accuracy, potentially saving millions of lives. Furthermore, AI-powered educational platforms can personalize learning for students in remote areas, democratizing access to quality education.</p>
+          <p style="margin-top:10px">However, AI also poses significant threats that cannot be ignored. The automation of jobs threatens to displace millions of workers — a McKinsey report estimates 800 million jobs could be lost by 2030. Moreover, biased AI systems risk perpetuating social inequalities in areas such as hiring and criminal justice. Privacy is another major concern, as facial recognition technology enables unprecedented surveillance of citizens.</p>
+          <p style="margin-top:10px">In conclusion, while AI holds extraordinary promise, its development must be accompanied by robust ethical frameworks and international regulations to ensure that its benefits are shared equitably and its risks are carefully managed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARABIC TAB -->
+    <div class="unit-content" id="u1-arabic">
+      <div class="card">
+        <div class="card-title">🌐 Arabic Language Support / الدعم اللغوي</div>
+        <div style="margin-top:20px">
+          <div class="ar">
+            <p style="font-size:1.1rem;font-weight:700;color:#1e3a5f;margin-bottom:16px">الوحدة الأولى: الذكاء الاصطناعي والعالم الرقمي</p>
+            <p>الذكاء الاصطناعي هو أحد أبرز التطورات التكنولوجية في القرن الحادي والعشرين. يُعيد تشكيل مختلف القطاعات، من الطب إلى التعليم، ومن الزراعة إلى القانون. المغرب، شأنه شأن كثير من الدول النامية، أمام فرصة تاريخية للاستفادة من هذه التقنية مع ضرورة التعامل بحذر مع مخاطرها.</p>
+            <p style="margin-top:12px"><strong>فوائد الذكاء الاصطناعي:</strong></p>
+            <ul style="padding-right:20px;margin-top:8px">
+              <li>الكشف المبكر عن الأمراض بدقة عالية</li>
+              <li>تحسين إنتاجية الزراعة عبر الطائرات المسيّرة والمستشعرات</li>
+              <li>تخصيص التعليم وفق احتياجات كل طالب</li>
+            </ul>
+            <p style="margin-top:12px"><strong>مخاطر الذكاء الاصطناعي:</strong></p>
+            <ul style="padding-right:20px;margin-top:8px">
+              <li>التحيز الخوارزمي وتعزيز التمييز الاجتماعي</li>
+              <li>فقدان ملايين الوظائف بسبب الأتمتة</li>
+              <li>انتهاك الخصوصية عبر تقنيات التعرف على الوجه</li>
+            </ul>
+            <p style="margin-top:16px;padding:12px;background:#eff6ff;border-radius:10px;border-right:4px solid #3b82f6"><strong>كلمات مفتاحية:</strong> خوارزمية (algorithm) — أتمتة (automation) — تحيز (bias) — خصوصية (privacy) — مراقبة (surveillance)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 2 ====== -->
+  <div class="section" id="unit2">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 2: Environment & Climate Change</h1><p class="section-desc" style="margin-bottom:0">Global Warming, Sustainability, and Morocco's Green Future</p></div>
+      <span class="unit-label">🌍 UNIT 02</span>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u2','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u2','vocab',this)">📚 Vocabulary</button>
+      <button class="tab-btn" onclick="switchTab('u2','writing',this)">✍️ Writing</button>
+    </div>
+
+    <div class="unit-content active" id="u2-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: Racing Against the Climate Clock</h4>
+          <p>The scientific consensus on climate change is unequivocal: the Earth's average temperature has risen by approximately 1.1°C since the pre-industrial era, and the consequences are already devastating communities worldwide. From intensifying hurricanes in the Caribbean to unprecedented wildfires in Australia, from rising sea levels threatening Pacific island nations to prolonged droughts devastating sub-Saharan Africa, climate change is not a distant future threat — it is an unfolding present crisis.</p>
+          <p style="margin-top:12px">The primary driver of climate change is the accumulation of greenhouse gases, particularly carbon dioxide (CO₂) and methane (CH₄), in the Earth's atmosphere. These gases trap heat from the sun, creating a "greenhouse effect" that progressively warms the planet. Since the Industrial Revolution of the 18th century, human activities — burning fossil fuels for energy, large-scale deforestation, intensive agriculture, and cement production — have released quantities of CO₂ that far exceed the planet's natural absorption capacity.</p>
+          <p style="margin-top:12px">Morocco occupies a distinctive position in global climate discussions. As an African and developing nation that contributes minimally to global greenhouse gas emissions, Morocco nonetheless faces disproportionate climate impacts, including desertification, water scarcity, and threats to its agricultural heartland. Yet Morocco has transformed this vulnerability into leadership: the Noor Ouarzazate Solar Power Station, one of the world's largest concentrated solar plants, is a testament to the kingdom's commitment to renewable energy. Morocco has pledged to derive 52% of its electricity from renewable sources by 2030.</p>
+          <p style="margin-top:12px">The Paris Agreement of 2015, signed by nearly 200 nations, established the goal of limiting global warming to 1.5°C above pre-industrial levels. However, current national commitments, even if fully implemented, would result in warming of approximately 2.7°C — a trajectory scientists describe as catastrophic. The window for meaningful action is narrowing rapidly, demanding immediate, dramatic reductions in emissions alongside massive investment in adaptation strategies for communities already suffering the consequences of climate breakdown.</p>
+          <p style="margin-top:12px">Individual actions — reducing meat consumption, using public transport, minimizing energy waste — contribute to the solution, but structural change is indispensable. Without transforming energy systems, reforming agricultural practices, and ending fossil fuel subsidies at a global scale, no amount of individual virtue will avert climatic catastrophe. The challenge of our time demands both personal responsibility and collective political will at the highest levels.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Questions — Reading Comprehension</h4>
+
+          <div class="question-item">
+            <div class="question-text">1. What is the main greenhouse gas mentioned in the passage?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Oxygen (O₂)')">A. Oxygen (O₂)</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Carbon dioxide (CO₂)')">B. Carbon dioxide (CO₂)</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Nitrogen (N₂)')">C. Nitrogen (N₂)</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Hydrogen (H₂)')">D. Hydrogen (H₂)</button>
+            </div>
+            <div class="feedback" id="fb-u2-q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">2. The Paris Agreement aims to limit warming to:</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','2.7°C')">A. 2.7°C above pre-industrial levels</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','1.1°C')">B. 1.1°C above pre-industrial levels</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','1.5°C')">C. 1.5°C above pre-industrial levels</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','3.0°C')">D. 3.0°C above pre-industrial levels</button>
+            </div>
+            <div class="feedback" id="fb-u2-q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">3. True or False: Morocco is described as one of the world's largest contributors to greenhouse gas emissions.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'false','False! The passage says Morocco contributes MINIMALLY to global emissions.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The passage states Morocco contributes minimally to global greenhouse gas emissions.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u2-q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">4. True or False: The Noor Ouarzazate plant is a solar power facility in Morocco.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! Noor Ouarzazate is indeed described as one of the world\'s largest concentrated solar plants, located in Morocco.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'false','False! The passage clearly states it is a concentrated solar plant in Morocco.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u2-q4"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">5. According to the author, what is the main limitation of individual actions in fighting climate change?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Individuals are too uneducated to make a difference.')">A. Individuals are too uneducated to make a difference.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Without structural and political change, individual actions alone cannot solve the problem.')">B. Without structural and political change, individual actions alone cannot solve the problem.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Individual actions make the climate worse.')">C. Individual actions make the climate worse.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Governments do not support individual green efforts.')">D. Governments do not support individual green efforts.</button>
+            </div>
+            <div class="feedback" id="fb-u2-q5"></div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u2-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u2-answers')">🙈 Hide Answers</button>
+        </div>
+
+        <div class="answer-reveal" id="u2-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — Carbon dioxide (CO₂) is identified as the primary greenhouse gas.</div>
+          <div class="answer-box"><strong>Q2:</strong> C — 1.5°C above pre-industrial levels is the Paris Agreement target.</div>
+          <div class="answer-box"><strong>Q3:</strong> FALSE — Morocco contributes minimally to global emissions.</div>
+          <div class="answer-box"><strong>Q4:</strong> TRUE — Noor Ouarzazate is one of the world's largest concentrated solar plants, in Morocco.</div>
+          <div class="answer-box"><strong>Q5:</strong> B — The author argues that structural change (energy systems, agriculture reform, political will) is indispensable alongside individual action.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u2-vocab">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">📚 Unit 2 — Environment Vocabulary</div><div class="card-subtitle">Click each word to reveal</div></div>
+          <button class="btn btn-primary btn-sm" onclick="revealAllVocab('u2-vocab-grid')">Reveal All</button>
+        </div>
+        <div class="vocab-grid" id="u2-vocab-grid">
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">desertification <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The process by which fertile land becomes desert. <em>"Desertification threatens Morocco's southern agricultural regions."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">unequivocal <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Leaving no doubt; completely clear. <em>"The scientific consensus is unequivocal."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">disproportionate <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Too large or small compared to something else. <em>"Developing nations face disproportionate climate impacts."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">renewable <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">From a source that is naturally replenished. <em>"Solar and wind are renewable energy sources."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">trajectory <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The path or course of something over time. <em>"Current policies put us on a catastrophic trajectory."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">indispensable <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Absolutely necessary; essential. <em>"Structural change is indispensable."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">adaptation <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Adjusting to new conditions. <em>"Communities need adaptation strategies for climate change."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">mitigation <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Reducing the severity of something. <em>"Climate mitigation involves cutting emissions."</em></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u2-writing">
+      <div class="card">
+        <div class="card-title">✍️ Writing Task — Unit 2</div>
+        <div class="writing-prompt" style="margin-top:16px">
+          <h5>📝 Essay Prompt</h5>
+          <p style="font-size:0.9rem;color:#1e40af;margin-top:8px">"Morocco is leading the way in the fight against climate change." To what extent do you agree with this statement? Write 150-200 words using specific examples.</p>
+        </div>
+        <button class="btn btn-success" onclick="toggleModelAnswer('u2-model')">📄 Show Model Answer</button>
+        <div class="model-answer" id="u2-model" style="margin-top:16px">
+          <h5>✅ Model Answer</h5>
+          <p>Morocco has indeed emerged as a genuine leader in the global battle against climate change, particularly among developing nations. The country's commitment to renewable energy is most visibly demonstrated by the Noor Ouarzazate Solar Complex — one of the world's largest solar installations — which generates clean electricity for hundreds of thousands of homes. Furthermore, Morocco has pledged to source 52% of its electricity from renewable energy by 2030, a target that exceeds the commitments of many wealthier nations.</p>
+          <p style="margin-top:10px">Moreover, Morocco hosted the COP22 climate conference in Marrakech in 2016, reinforcing its international credibility on environmental issues. The government's Green Morocco Plan has also transformed agricultural practices to be more sustainable and water-efficient.</p>
+          <p style="margin-top:10px">However, Morocco still faces significant challenges, including water scarcity, desertification in the south, and dependence on imported fossil fuels for transportation. In conclusion, while Morocco demonstrates remarkable leadership for a developing nation, continued investment and international support are required to fully realize its green ambitions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 3 ====== -->
+  <div class="section" id="unit3">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 3: Globalization & Its Impact</h1><p class="section-desc" style="margin-bottom:0">Trade, Culture, Inequality, and the Shrinking World</p></div>
+      <span class="unit-label">🌐 UNIT 03</span>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u3','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u3','vocab',this)">📚 Vocabulary</button>
+    </div>
+    <div class="unit-content active" id="u3-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: The Paradox of the Connected World</h4>
+          <p>Globalization — the process by which the world's economies, cultures, and populations have become increasingly interconnected — represents arguably the most significant transformation of human civilization since the Industrial Revolution. The liberalization of trade, the explosion of digital communication, and the unprecedented mobility of people, capital, and ideas have created a world where a consumer in Casablanca can purchase a smartphone manufactured in China using components from Germany, Korea, and the United States, all within a few clicks.</p>
+          <p style="margin-top:12px">The economic benefits of globalization are substantial. Free trade has lifted hundreds of millions of people out of extreme poverty, particularly in East and Southeast Asia. Countries like South Korea, Taiwan, and more recently Vietnam have achieved remarkable economic growth by integrating into global supply chains. For Morocco, globalization has enabled the expansion of phosphate exports, the development of a competitive automotive and aerospace manufacturing sector, and the growth of tourism — all of which generate vital foreign exchange and employment.</p>
+          <p style="margin-top:12px">Yet globalization's benefits have been distributed profoundly unequally. While corporate profits and financial markets have surged, wages for unskilled workers in many developed countries have stagnated, fueling political resentment and the rise of populist movements. In developing nations, poorly regulated integration into global markets has sometimes led to the destruction of local industries unable to compete with cheap imports. Cultural homogenization — the erosion of local traditions, languages, and values under the influence of dominant Western consumer culture — represents a subtler but equally troubling dimension of globalization's impact.</p>
+          <p style="margin-top:12px">Morocco's Amazigh culture, for instance, faces complex pressures: while globalization has provided platforms for Amazigh music and art to reach international audiences, it has simultaneously accelerated the adoption of global consumer habits that may displace traditional practices. The tension between openness and preservation, between integration and identity, defines Morocco's — and indeed the world's — experience of globalization.</p>
+          <p style="margin-top:12px">Managing globalization requires neither naive celebration nor wholesale rejection, but rather thoughtful governance: trade agreements that include robust social and environmental standards, investments in education and worker retraining, and strong cultural policies that support local creativity. The goal should be a globalization that enriches rather than impoverishes — economically, culturally, and humanly.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Comprehension Questions</h4>
+          <div class="question-item">
+            <div class="question-text">1. Which country is used as an example of a Moroccan consumer benefiting from globalized trade?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Rabat')">A. A consumer in Rabat buying French goods.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Casablanca')">B. A consumer in Casablanca buying a smartphone with global components.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Marrakech')">C. A consumer in Marrakech selling handicrafts online.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Fes')">D. A consumer in Fes importing leather goods.</button>
+            </div>
+            <div class="feedback" id="fb-u3-q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">2. What does "cultural homogenization" mean in the context of this passage?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','The growth of local cultural industries worldwide.')">A. The growth of local cultural industries worldwide.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','The celebration of cultural diversity through globalization.')">B. The celebration of cultural diversity through globalization.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','The erosion of local cultures under the influence of dominant global culture.')">C. The erosion of local cultures under the influence of dominant global culture.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','The fusion of different cultures to create new hybrid cultures.')">D. The fusion of different cultures to create new hybrid cultures.</button>
+            </div>
+            <div class="feedback" id="fb-u3-q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">3. True or False: The passage claims globalization has benefited everyone equally.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'false','False! The passage states benefits have been distributed UNEQUALLY.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The text explicitly says benefits have been distributed "profoundly unequally."')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u3-q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">4. According to the passage, what is the author's recommended approach to globalization?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Complete rejection of global trade and integration.')">A. Complete rejection of global trade and integration.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Uncritical celebration of all aspects of globalization.')">B. Uncritical celebration of all aspects of globalization.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Thoughtful governance with social, environmental, and cultural policies.')">C. Thoughtful governance with social, environmental, and cultural policies.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Leaving globalization entirely to market forces.')">D. Leaving globalization entirely to market forces.</button>
+            </div>
+            <div class="feedback" id="fb-u3-q4"></div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u3-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u3-answers')">🙈 Hide Answers</button>
+        </div>
+        <div class="answer-reveal" id="u3-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — A consumer in Casablanca buying a smartphone with global components.</div>
+          <div class="answer-box"><strong>Q2:</strong> C — The erosion of local traditions, languages, and values under the influence of dominant Western consumer culture.</div>
+          <div class="answer-box"><strong>Q3:</strong> FALSE — The passage states benefits have been distributed "profoundly unequally."</div>
+          <div class="answer-box"><strong>Q4:</strong> C — Thoughtful governance combining trade agreements with social/environmental standards, education investment, and cultural policies.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u3-vocab">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">📚 Unit 3 — Globalization Vocabulary</div></div>
+          <button class="btn btn-primary btn-sm" onclick="revealAllVocab('u3-vocab-grid')">Reveal All</button>
+        </div>
+        <div class="vocab-grid" id="u3-vocab-grid">
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">liberalization <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The removal of government restrictions on trade. <em>"Trade liberalization opened new markets."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">stagnate <span>+</span></div><div class="vocab-type">verb</div><div class="vocab-def">To stop developing; remain unchanged. <em>"Wages stagnated while profits soared."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">populist <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Appealing to ordinary people against elites. <em>"Populist movements gained strength amid inequality."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">homogenization <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Making things the same; reduction of differences. <em>"Cultural homogenization threatens local traditions."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">interconnected <span>+</span></div><div class="vocab-type">adjective</div><div class="vocab-def">Linked together so that each affects the other. <em>"Today's economies are deeply interconnected."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">phosphate <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">A mineral used in fertilizers; Morocco is the world's largest exporter. <em>"Phosphate exports are vital to Morocco's economy."</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 4 ====== -->
+  <div class="section" id="unit4">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 4: Youth & Society</h1><p class="section-desc" style="margin-bottom:0">Identity, Engagement, and the Power of Young Generations</p></div>
+      <span class="unit-label">👥 UNIT 04</span>
+    </div>
+    <div class="card">
+      <div class="passage">
+        <h4>📄 Text: Generation Z — Between Potential and Pressure</h4>
+        <p>Generation Z — those born roughly between 1997 and 2012 — represents the first truly digital native generation: individuals who have grown up not merely with the internet, but with smartphones, social media algorithms, and the constant connectivity these technologies enable. As this generation comes of age in Morocco and across the world, it carries both extraordinary potential and distinctive pressures that no previous generation has confronted in quite the same way.</p>
+        <p style="margin-top:12px">Research consistently demonstrates that Generation Z is the most educated generation in history, with higher rates of secondary and tertiary enrollment than any preceding cohort. Young Moroccans today have access to global information, online communities, and educational resources that were unimaginable to their parents. This has cultivated a generation that is more globally aware, more sensitive to social justice issues, and more equipped with digital skills that the modern economy demands.</p>
+        <p style="margin-top:12px">Yet the same digital environment that empowers also burdens. Mental health researchers have documented a dramatic rise in anxiety, depression, and loneliness among young people correlated with heavy social media use. The curated perfection of social media feeds creates unrealistic standards of beauty, success, and lifestyle, generating intense social comparison and feelings of inadequacy. Cyberbullying has emerged as a serious public health concern, with Moroccan schools and families increasingly grappling with its consequences.</p>
+        <p style="margin-top:12px">Civic engagement among youth presents a mixed picture. While traditional political participation — voting, party membership — remains low among young Moroccans, digital activism has flourished. The Hirak Rif movement demonstrated how young Moroccans could mobilize for social justice causes through social media. Youth-led environmental campaigns, women's rights advocacy, and Amazigh cultural movements have all found new energy through digital organizing.</p>
+        <p style="margin-top:12px">The challenge for Moroccan society is to channel the energy, creativity, and global awareness of its young people into productive civic engagement, while providing the mental health support, educational opportunities, and economic pathways that a generation under pressure genuinely needs.</p>
+      </div>
+
+      <div class="questions-section">
+        <h4>❓ Questions</h4>
+        <div class="question-item">
+          <div class="question-text">1. What makes Generation Z "digital natives" according to the passage?</div>
+          <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','They invented the internet and social media.')">A. They invented the internet and social media.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'correct','They grew up with smartphones and social media from birth.')">B. They grew up with smartphones and social media from birth.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','They use digital tools only for education.')">C. They use digital tools only for education.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','They have native programming and coding skills.')">D. They have native programming and coding skills.</button>
+          </div>
+          <div class="feedback" id="fb-u4-q1"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">2. True or False: The passage suggests that social media is entirely harmful to young people.</div>
+          <div class="tf-row">
+            <button class="tf-btn" onclick="checkTF(this,'false','False! The passage acknowledges both empowering AND harmful aspects of the digital environment.')">✅ True</button>
+            <button class="tf-btn" onclick="checkTF(this,'true','Correct! The passage shows both the empowering and harmful aspects of social media for youth.')">❌ False</button>
+          </div>
+          <div class="feedback" id="fb-u4-q2"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">3. What example does the passage use to show Moroccan youth civic engagement?</div>
+          <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','The Arab Spring protests in Tunisia.')">A. The Arab Spring protests in Tunisia.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'correct','The Hirak Rif movement using social media for social justice.')">B. The Hirak Rif movement using social media for social justice.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','Morocco\'s 2011 constitutional referendum.')">C. Morocco's 2011 constitutional referendum.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','Young Moroccans voting in large numbers.')">D. Young Moroccans voting in large numbers.</button>
+          </div>
+          <div class="feedback" id="fb-u4-q3"></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="revealAnswers('u4-answers')">👁️ Show All Answers</button>
+        <button class="btn btn-outline" onclick="hideAnswers('u4-answers')">🙈 Hide Answers</button>
+      </div>
+      <div class="answer-reveal" id="u4-answers">
+        <div class="divider"></div>
+        <div class="answer-box"><strong>Q1:</strong> B — They grew up with smartphones, social media, and constant connectivity from birth.</div>
+        <div class="answer-box"><strong>Q2:</strong> FALSE — The passage acknowledges both empowering benefits AND serious mental health harms of digital environments.</div>
+        <div class="answer-box"><strong>Q3:</strong> B — The Hirak Rif movement demonstrated how young Moroccans mobilized for social justice through social media.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 5 ====== -->
+  <div class="section" id="unit5">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 5: Education Systems</h1><p class="section-desc" style="margin-bottom:0">Reform, Access, and the Future of Learning</p></div>
+      <span class="unit-label">🎓 UNIT 05</span>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u5','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u5','writing',this)">✍️ Writing</button>
+    </div>
+    <div class="unit-content active" id="u5-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: Reimagining Education in the 21st Century</h4>
+          <p>The global education system is undergoing its most profound transformation in centuries. Traditional models of schooling — characterized by teacher-centered instruction, standardized curricula, and examination-based assessment — are being challenged by new pedagogical philosophies, technological innovations, and an evolving understanding of what knowledge and skills young people actually need in a rapidly changing world.</p>
+          <p style="margin-top:12px">The COVID-19 pandemic served as an unprecedented stress test for education systems worldwide. Schools closed, and within weeks, teachers and students across the globe were navigating the unfamiliar territory of online learning. In Morocco, the Ministry of Education rapidly deployed digital platforms and public television broadcasts to maintain educational continuity. This emergency experiment revealed both the potential and the profound limitations of digital education: while technology can deliver content to students regardless of geographic location, it cannot fully replicate the social, emotional, and collaborative dimensions of in-person learning.</p>
+          <p style="margin-top:12px">Equity remains the most urgent challenge confronting Moroccan education. Despite significant improvements in enrollment rates — Morocco's literacy rate has risen from 43% in 2004 to over 73% today — deep inequalities persist between urban and rural areas, between different socioeconomic groups, and between genders. Rural girls, in particular, remain disproportionately affected by early school dropout, limited by poverty, distance, and entrenched social attitudes that undervalue female education.</p>
+          <p style="margin-top:12px">Morocco's 2015 Education Reform Framework and subsequent National Education Strategy 2015-2030 represent ambitious attempts to address these challenges. Key priorities include trilingual education (Arabic, Amazigh, and a foreign language), competency-based rather than rote-learning curricula, greater investment in vocational training, and the integration of digital literacy across all levels. Critics argue, however, that implementation has lagged behind vision, and that without addressing teacher quality, school infrastructure, and social support systems, policy documents alone cannot transform educational reality.</p>
+          <p style="margin-top:12px">Ultimately, education is more than the transmission of information; it is the cultivation of curious, critical, and engaged citizens. A truly successful Moroccan education system would not merely prepare students to pass the BAC examination, but would equip them with the adaptability, creativity, and ethical reasoning needed to navigate — and shape — an uncertain future.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Comprehension Questions</h4>
+          <div class="question-item">
+            <div class="question-text">1. According to the passage, what did the COVID-19 pandemic reveal about digital education?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Digital education is superior to traditional classroom learning in all aspects.')">A. Digital education is superior to traditional classroom learning in all aspects.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Technology can deliver content but cannot replicate the social and emotional dimensions of in-person learning.')">B. Technology can deliver content but cannot replicate the social and emotional dimensions of in-person learning.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Morocco was fully prepared for online learning before the pandemic.')">C. Morocco was fully prepared for online learning before the pandemic.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Students performed better during remote learning than in traditional schools.')">D. Students performed better during remote learning than in traditional schools.</button>
+            </div>
+            <div class="feedback" id="fb-u5-q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">2. True or False: Morocco's literacy rate has improved significantly since 2004.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The passage states literacy rose from 43% in 2004 to over 73% today.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'false','False! The passage clearly shows improvement from 43% to over 73%.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u5-q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">3. Which group is described as most affected by school dropout in Morocco?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Urban male students from wealthy families.')">A. Urban male students from wealthy families.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','University students in Casablanca.')">B. University students in Casablanca.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Rural girls facing poverty, distance, and social attitudes.')">C. Rural girls facing poverty, distance, and social attitudes.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Private school students in major cities.')">D. Private school students in major cities.</button>
+            </div>
+            <div class="feedback" id="fb-u5-q3"></div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u5-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u5-answers')">🙈 Hide Answers</button>
+        </div>
+        <div class="answer-reveal" id="u5-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — Technology can deliver content but cannot fully replicate social, emotional, and collaborative aspects of in-person learning.</div>
+          <div class="answer-box"><strong>Q2:</strong> TRUE — Morocco's literacy rate rose from 43% in 2004 to over 73%.</div>
+          <div class="answer-box"><strong>Q3:</strong> C — Rural girls are most affected by early school dropout due to poverty, distance, and entrenched social attitudes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u5-writing">
+      <div class="card">
+        <div class="card-title">✍️ Writing Task — Unit 5</div>
+        <div class="writing-prompt" style="margin-top:16px">
+          <h5>📝 Essay Prompt</h5>
+          <p style="font-size:0.9rem;color:#1e40af;margin-top:8px">"Online learning is the future of education." Discuss the advantages and disadvantages. Write 150-200 words.</p>
+        </div>
+        <button class="btn btn-success" onclick="toggleModelAnswer('u5-model')">📄 Show Model Answer</button>
+        <div class="model-answer" id="u5-model" style="margin-top:16px">
+          <h5>✅ Model Answer</h5>
+          <p>The rapid expansion of online learning has fundamentally altered how education is delivered across the globe. On the one hand, digital platforms offer significant advantages: students in remote areas can access world-class instruction, learning can be personalized to individual needs and pace, and costs are substantially lower than traditional schooling. During the COVID-19 pandemic, online platforms enabled millions of Moroccan students to continue their studies despite school closures.</p>
+          <p style="margin-top:10px">Nevertheless, online learning presents serious drawbacks that cannot be overlooked. The digital divide means that students without reliable internet access or devices are excluded, deepening existing educational inequalities. Furthermore, the social and emotional dimensions of learning — collaboration, mentorship, friendship — are difficult to replicate online. Research also suggests that self-discipline is essential for online learning, a quality that many students, particularly younger ones, have not yet fully developed.</p>
+          <p style="margin-top:10px">In conclusion, online learning is a valuable supplement to traditional education rather than a complete replacement. A hybrid approach that combines face-to-face instruction with digital tools is likely the most effective model for Moroccan education in the 21st century.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 6 ====== -->
+  <div class="section" id="unit6">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 6: Health & Medicine</h1><p class="section-desc" style="margin-bottom:0">Pandemics, Public Health, and Medical Breakthroughs</p></div>
+      <span class="unit-label">🏥 UNIT 06</span>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u6','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u6','vocab',this)">📚 Vocabulary</button>
+    </div>
+    <div class="unit-content active" id="u6-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: After COVID-19 — Lessons for Global Health</h4>
+          <p>The COVID-19 pandemic, caused by the SARS-CoV-2 coronavirus, constituted the most severe global public health crisis since the 1918 influenza pandemic, ultimately claiming the lives of over seven million people and disrupting virtually every aspect of human civilization. Yet beyond the immeasurable tragedy, the pandemic generated critical insights about global health systems, vaccine development, and the intricate relationship between human behavior and disease transmission.</p>
+          <p style="margin-top:12px">Perhaps the most extraordinary scientific achievement of the pandemic era was the development of mRNA vaccines by pharmaceutical companies BioNTech/Pfizer and Moderna within an unprecedented twelve months. These vaccines did not merely protect against COVID-19; they demonstrated the transformative potential of mRNA technology for vaccine development more broadly, raising hopes for vaccines against HIV, malaria, tuberculosis, and even certain cancers. Morocco's swift procurement and distribution of vaccines — particularly through its partnership with China's Sinopharm and the COVAX initiative — earned international recognition and protected millions of Moroccan citizens.</p>
+          <p style="margin-top:12px">The pandemic also exposed stark inequalities within global health systems. Wealthy nations secured vaccine supplies through "vaccine nationalism," while poorer nations waited months or years for adequate doses. Healthcare workers in under-resourced settings faced impossible choices amid shortages of personal protective equipment, ventilators, and trained staff. Morocco's experience highlighted both the kingdom's relative resilience — built on a competent public health infrastructure — and the genuine vulnerabilities of a health system stretched by the extraordinary demands of pandemic response.</p>
+          <p style="margin-top:12px">Mental health emerged as a parallel pandemic: widespread lockdowns, social isolation, bereavement, and economic anxiety drove dramatic increases in depression, anxiety disorders, and substance abuse worldwide. This crisis has forced governments and health professionals to recognize mental health as an integral component of public health, rather than a secondary concern.</p>
+          <p style="margin-top:12px">The post-pandemic world demands sustained investment in pandemic preparedness, health system strengthening, and global health equity. As climate change creates conditions favorable to the emergence of new infectious diseases, the lessons of COVID-19 — including the critical importance of rapid, coordinated international response — have never been more urgent.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Questions</h4>
+          <div class="question-item">
+            <div class="question-text">1. What was remarkable about the COVID-19 mRNA vaccines?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','They were developed using 50-year-old vaccine technology.')">A. They were developed using 50-year-old vaccine technology.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','They were developed within 12 months and showed potential for vaccines against other diseases.')">B. They were developed within 12 months and showed potential for vaccines against other diseases.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','They were the first vaccines ever created in history.')">C. They were the first vaccines ever created in history.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','They eliminated COVID-19 completely within two years.')">D. They eliminated COVID-19 completely within two years.</button>
+            </div>
+            <div class="feedback" id="fb-u6-q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">2. True or False: Morocco had difficulty acquiring COVID-19 vaccines during the pandemic.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'false','False! Morocco was praised for its swift procurement and distribution of vaccines.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! Morocco earned international recognition for its swift vaccine procurement and distribution.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u6-q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">3. What does "vaccine nationalism" mean according to the passage?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Creating vaccines based on national identity.')">A. Creating vaccines based on national identity.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Wealthy nations securing vaccine supplies for themselves, leaving poorer nations behind.')">B. Wealthy nations securing vaccine supplies for themselves, leaving poorer nations behind.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Countries refusing to use foreign-made vaccines.')">C. Countries refusing to use foreign-made vaccines.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','The use of vaccines to promote political campaigns.')">D. The use of vaccines to promote political campaigns.</button>
+            </div>
+            <div class="feedback" id="fb-u6-q3"></div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u6-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u6-answers')">🙈 Hide Answers</button>
+        </div>
+        <div class="answer-reveal" id="u6-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — Developed within 12 months using mRNA technology, with potential for future vaccines against HIV, malaria, TB, and cancer.</div>
+          <div class="answer-box"><strong>Q2:</strong> FALSE — Morocco was recognized internationally for its swift vaccine procurement and distribution.</div>
+          <div class="answer-box"><strong>Q3:</strong> B — Wealthy nations secured vaccines for themselves, leaving poorer nations without adequate doses for months or years.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u6-vocab">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">📚 Unit 6 — Health Vocabulary</div></div>
+          <button class="btn btn-primary btn-sm" onclick="revealAllVocab('u6-vocab-grid')">Reveal All</button>
+        </div>
+        <div class="vocab-grid" id="u6-vocab-grid">
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">pandemic <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">A disease outbreak that spreads across countries or the entire world. <em>"COVID-19 became a global pandemic in 2020."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">immunity <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The ability of the body to resist a disease. <em>"Vaccination builds immunity against infection."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">mortality <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The number of deaths in a given period or from a disease. <em>"COVID-19 had a high mortality rate among the elderly."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">quarantine <span>+</span></div><div class="vocab-type">noun/verb</div><div class="vocab-def">Isolation to prevent the spread of disease. <em>"Infected individuals were placed in quarantine."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">procurement <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The act of obtaining or acquiring something. <em>"Morocco's vaccine procurement was praised globally."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">bereavement <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The state of loss after a loved one's death. <em>"Bereavement contributed to the mental health crisis."</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 7 ====== -->
+  <div class="section" id="unit7">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 7: Media & Fake News</h1><p class="section-desc" style="margin-bottom:0">Digital Literacy, Misinformation, and Responsible Journalism</p></div>
+      <span class="unit-label">📰 UNIT 07</span>
+    </div>
+    <div class="card">
+      <div class="passage">
+        <h4>📄 Text: The Infodemic — Navigating an Age of Misinformation</h4>
+        <p>The World Health Organization coined the term "infodemic" to describe the overwhelming flood of information — accurate and false — that accompanies modern health crises. But the phenomenon extends far beyond health: in virtually every domain of public life, from politics to science to social issues, the deliberate or accidental spread of misinformation through digital media has become one of the defining challenges of our age.</p>
+        <p style="margin-top:12px">Social media platforms, designed to maximize user engagement through algorithmic amplification, systematically favor emotionally provocative content — including misinformation — over accurate but less sensational reporting. Research by MIT scientists demonstrated that false news stories spread six times faster than true ones on Twitter, reaching twenty times more people. The economic incentives are perverse: advertising revenue flows to content that generates clicks and shares, regardless of its accuracy.</p>
+        <p style="margin-top:12px">The consequences of misinformation are demonstrably deadly. During COVID-19, conspiracy theories about vaccines caused hesitancy that cost lives. Climate change denial, amplified by fossil fuel industry-funded campaigns, has delayed urgent policy action for decades. Political disinformation campaigns have undermined trust in democratic institutions across the world. In Morocco, as elsewhere, viral misinformation about everything from political events to health remedies circulates through WhatsApp groups and social media with devastating speed.</p>
+        <p style="margin-top:12px">Media literacy — the ability to critically evaluate information sources, identify logical fallacies, and distinguish credible reporting from propaganda — has thus become an essential citizenship skill. Finland has integrated media literacy into its school curriculum from primary level, producing citizens demonstrably more resistant to misinformation. Morocco's education system has begun incorporating digital literacy components, though full integration remains a work in progress.</p>
+        <p style="margin-top:12px">Addressing the misinformation crisis requires a multi-stakeholder approach: platform accountability, journalist integrity, government transparency, and above all, an educated and skeptical citizenry. The antidote to misinformation is not censorship — which invariably creates new problems — but rather the cultivation of a culture of critical thinking and evidence-based reasoning.</p>
+      </div>
+
+      <div class="questions-section">
+        <h4>❓ True or False Questions</h4>
+        <div class="question-item">
+          <div class="question-text">1. The term "infodemic" was created by a social media company.</div>
+          <div class="tf-row">
+            <button class="tf-btn" onclick="checkTF(this,'false','False! The WHO (World Health Organization) coined the term "infodemic."')">✅ True</button>
+            <button class="tf-btn" onclick="checkTF(this,'true','Correct! The term was coined by the World Health Organization (WHO), not a social media company.')">❌ False</button>
+          </div>
+          <div class="feedback" id="fb-u7-q1"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">2. According to MIT research, false news spreads faster than true news on social media.</div>
+          <div class="tf-row">
+            <button class="tf-btn" onclick="checkTF(this,'true','Correct! MIT research found false news spreads 6 times faster and reaches 20 times more people.')">✅ True</button>
+            <button class="tf-btn" onclick="checkTF(this,'false','False! The passage clearly states that false news spreads six times faster than true stories.')">❌ False</button>
+          </div>
+          <div class="feedback" id="fb-u7-q2"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">3. The author argues that censorship is the best solution to misinformation.</div>
+          <div class="tf-row">
+            <button class="tf-btn" onclick="checkTF(this,'false','False! The author explicitly states censorship "invariably creates new problems" and advocates for critical thinking instead.')">✅ True</button>
+            <button class="tf-btn" onclick="checkTF(this,'true','Correct! The author specifically argues AGAINST censorship, advocating instead for critical thinking and evidence-based reasoning.')">❌ False</button>
+          </div>
+          <div class="feedback" id="fb-u7-q3"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">4. Finland is mentioned as a positive example of media literacy education.</div>
+          <div class="tf-row">
+            <button class="tf-btn" onclick="checkTF(this,'true','Correct! Finland integrated media literacy into its school curriculum from primary level, creating more misinformation-resistant citizens.')">✅ True</button>
+            <button class="tf-btn" onclick="checkTF(this,'false','False! Finland is explicitly praised for integrating media literacy into primary school curricula.')">❌ False</button>
+          </div>
+          <div class="feedback" id="fb-u7-q4"></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="revealAnswers('u7-answers')">👁️ Show All Answers</button>
+        <button class="btn btn-outline" onclick="hideAnswers('u7-answers')">🙈 Hide Answers</button>
+      </div>
+      <div class="answer-reveal" id="u7-answers">
+        <div class="divider"></div>
+        <div class="answer-box"><strong>Q1:</strong> FALSE — The WHO coined the term "infodemic."</div>
+        <div class="answer-box"><strong>Q2:</strong> TRUE — MIT research: false news spreads 6x faster, reaches 20x more people.</div>
+        <div class="answer-box"><strong>Q3:</strong> FALSE — The author argues AGAINST censorship; the solution is critical thinking.</div>
+        <div class="answer-box"><strong>Q4:</strong> TRUE — Finland integrated media literacy from primary school level.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 8 ====== -->
+  <div class="section" id="unit8">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 8: Human Rights & Justice</h1><p class="section-desc" style="margin-bottom:0">Equality, Freedoms, and International Human Rights Law</p></div>
+      <span class="unit-label">⚖️ UNIT 08</span>
+    </div>
+    <div class="card">
+      <div class="passage">
+        <h4>📄 Text: Human Rights — Universal Values in a Divided World</h4>
+        <p>The Universal Declaration of Human Rights, adopted by the United Nations General Assembly on December 10, 1948, remains one of humanity's most ambitious and consequential documents. Born from the ashes of World War II and the Holocaust, it proclaimed for the first time in history that certain rights belong to all human beings by virtue of their humanity alone — regardless of nationality, race, gender, religion, or political opinion. These rights, in the words of the Declaration, are "universal, indivisible, and inalienable."</p>
+        <p style="margin-top:12px">Seven decades later, the realization of human rights remains profoundly incomplete. Women continue to face systematic discrimination in employment, education, and political participation across much of the world. Millions live under authoritarian regimes that suppress free expression and imprison dissidents. Racial and ethnic minorities face institutional prejudice. LGBTQ+ individuals are criminalized in dozens of countries. Refugees and migrants are denied basic protections. The gap between the rights proclaimed in 1948 and the rights actually enjoyed by most of humanity remains vast.</p>
+        <p style="margin-top:12px">Morocco's human rights record presents a complex picture. Significant progress has been made: the 2004 Moudawwana reform transformed family law, greatly expanding women's legal rights in marriage, divorce, and child custody. The Truth and Reconciliation Commission (IER) in the early 2000s acknowledged past human rights violations under Hassan II and provided compensation to victims. The 2011 Constitution, adopted in response to the Arab Spring, embedded human rights guarantees and recognized the Amazigh language as an official language for the first time.</p>
+        <p style="margin-top:12px">Yet significant concerns remain. Press freedom organizations consistently rank Morocco in the lower half of global press freedom indices. Civil society organizations face regulatory constraints. Some activists and journalists have faced imprisonment for criticism of state policies or the monarchy. The Western Sahara dispute continues to generate human rights concerns on multiple sides.</p>
+        <p style="margin-top:12px">The universality of human rights is not a Western imposition, as some critics claim — it is a demand emerging from suffering people everywhere. Morocco's path toward fuller realization of human rights is ongoing, and its young people, as the most educated and connected generation in history, are central to that journey.</p>
+      </div>
+
+      <div class="questions-section">
+        <h4>❓ Questions</h4>
+        <div class="question-item">
+          <div class="question-text">1. When was the Universal Declaration of Human Rights adopted?</div>
+          <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','1945')">A. 1945</button>
+            <button class="option-btn" onclick="checkAnswer(this,'correct','1948')">B. 1948</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','1955')">C. 1955</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','1960')">D. 1960</button>
+          </div>
+          <div class="feedback" id="fb-u8-q1"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">2. What was the significance of Morocco's 2004 Moudawwana reform?</div>
+          <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','It banned political parties in Morocco.')">A. It banned political parties in Morocco.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'correct','It expanded women\'s legal rights in marriage, divorce, and child custody.')">B. It expanded women's legal rights in marriage, divorce, and child custody.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','It established free education for all Moroccan children.')">C. It established free education for all Moroccan children.</button>
+            <button class="option-btn" onclick="checkAnswer(this,'wrong','It recognized Amazigh as an official language.')">D. It recognized Amazigh as an official language.</button>
+          </div>
+          <div class="feedback" id="fb-u8-q2"></div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-text">3. True or False: The author believes human rights are a specifically Western concept not applicable to other cultures.</div>
+          <div class="tf-row">
+            <button class="tf-btn" onclick="checkTF(this,'false','False! The author explicitly argues human rights universality "is not a Western imposition" but emerges from suffering people everywhere.')">✅ True</button>
+            <button class="tf-btn" onclick="checkTF(this,'true','Correct! The author directly counters this claim, stating human rights are a demand from suffering people everywhere.')">❌ False</button>
+          </div>
+          <div class="feedback" id="fb-u8-q3"></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="revealAnswers('u8-answers')">👁️ Show All Answers</button>
+        <button class="btn btn-outline" onclick="hideAnswers('u8-answers')">🙈 Hide Answers</button>
+      </div>
+      <div class="answer-reveal" id="u8-answers">
+        <div class="divider"></div>
+        <div class="answer-box"><strong>Q1:</strong> B — December 10, 1948.</div>
+        <div class="answer-box"><strong>Q2:</strong> B — It greatly expanded women's legal rights in marriage, divorce, and child custody.</div>
+        <div class="answer-box"><strong>Q3:</strong> FALSE — The author explicitly states human rights universality is NOT a Western imposition.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 9 ====== -->
+  <div class="section" id="unit9">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 9: Science & Innovation</h1><p class="section-desc" style="margin-bottom:0">Space Exploration, Biotechnology, and Scientific Ethics</p></div>
+      <span class="unit-label">🔬 UNIT 09</span>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u9','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u9','vocab',this)">📚 Vocabulary</button>
+    </div>
+    <div class="unit-content active" id="u9-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: Humanity's Next Frontier — Space and the New Science</h4>
+          <p>In 2021, a remarkable convergence of technological capability and commercial ambition propelled space exploration into a new era. NASA's Perseverance rover landed on Mars, deploying the first helicopter — Ingenuity — to fly on another planet. Meanwhile, SpaceX's Starship program promised to deliver the first crewed mission to Mars within this decade. China's Tianwen-1 mission successfully placed a rover on Martian soil. Space, once the exclusive domain of government superpowers, has become a competitive arena involving private companies, middle-income nations, and international consortia.</p>
+          <p style="margin-top:12px">The scientific rationale for Mars exploration is compelling. Mars preserves geological records that could reveal whether life ever existed beyond Earth — one of the most profound questions in human history. Its resources, including water ice and minerals, could potentially support human habitation. The technologies developed for Mars missions — advanced life support, renewable energy systems, closed-loop food production — may have transformative applications back on Earth.</p>
+          <p style="margin-top:12px">Simultaneously, biotechnology is reshaping medicine in ways that would have seemed miraculous a generation ago. CRISPR-Cas9 gene editing technology, developed by Jennifer Doudna and Emmanuelle Charpentier (who shared the 2020 Nobel Prize in Chemistry), allows scientists to precisely edit DNA sequences, offering potential cures for genetic diseases like sickle cell anemia, Huntington's disease, and certain cancers. However, the same technology raises profound ethical concerns: the birth of gene-edited babies in China in 2018 ignited global controversy about the limits of scientific intervention in human reproduction.</p>
+          <p style="margin-top:12px">Morocco has recognized the strategic importance of science and technology investment. The Mohammed VI Polytechnic University (UM6P) in Ben Guerir has emerged as a world-class research institution, attracting international scientists and launching programs in AI, renewable energy, and agricultural biotechnology. Morocco's growing scientific capacity positions it to contribute to — rather than merely consume — global knowledge.</p>
+          <p style="margin-top:12px">Science divorced from ethics is dangerous; ethics uninformed by science is impotent. The great challenge of 21st-century science governance is to establish frameworks that enable the extraordinary benefits of scientific progress while establishing clear red lines that protect human dignity, environmental sustainability, and social equity.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Questions</h4>
+          <div class="question-item">
+            <div class="question-text">1. What was unique about NASA's Ingenuity during the Perseverance mission?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','It was the first rover to land on Mars.')">A. It was the first rover to land on Mars.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','It was the first helicopter to fly on another planet.')">B. It was the first helicopter to fly on another planet.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','It discovered liquid water on Mars.')">C. It discovered liquid water on Mars.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','It was the first private company spacecraft to reach Mars.')">D. It was the first private company spacecraft to reach Mars.</button>
+            </div>
+            <div class="feedback" id="fb-u9-q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">2. CRISPR-Cas9 was developed by scientists who won which Nobel Prize?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Nobel Prize in Medicine, 2019')">A. Nobel Prize in Medicine, 2019</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Nobel Prize in Chemistry, 2020')">B. Nobel Prize in Chemistry, 2020</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Nobel Prize in Physics, 2021')">C. Nobel Prize in Physics, 2021</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Nobel Peace Prize, 2020')">D. Nobel Peace Prize, 2020</button>
+            </div>
+            <div class="feedback" id="fb-u9-q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">3. True or False: The passage suggests Morocco has no significant scientific institutions.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'false','False! The passage mentions UM6P in Ben Guerir as a world-class research institution.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The passage highlights UM6P (Mohammed VI Polytechnic University) as a world-class research institution.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u9-q3"></div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u9-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u9-answers')">🙈 Hide Answers</button>
+        </div>
+        <div class="answer-reveal" id="u9-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — Ingenuity was the first helicopter to fly on another planet (Mars).</div>
+          <div class="answer-box"><strong>Q2:</strong> B — Nobel Prize in Chemistry, 2020 (Jennifer Doudna and Emmanuelle Charpentier).</div>
+          <div class="answer-box"><strong>Q3:</strong> FALSE — The passage specifically mentions UM6P as a world-class research institution.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u9-vocab">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">📚 Unit 9 — Science Vocabulary</div></div>
+          <button class="btn btn-primary btn-sm" onclick="revealAllVocab('u9-vocab-grid')">Reveal All</button>
+        </div>
+        <div class="vocab-grid" id="u9-vocab-grid">
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">biotechnology <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Using living systems and organisms to develop products. <em>"Biotechnology is revolutionizing medicine."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">gene editing <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Modifying an organism's DNA precisely. <em>"CRISPR enables precise gene editing."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">consortium <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">A group of organizations working together. <em>"An international consortium funded the project."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">convergence <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">Coming together of different elements. <em>"A convergence of technology and ambition drove space exploration."</em></div></div>
+          <div class="vocab-card" onclick="toggleVocabDef(this)"><div class="vocab-word">habitation <span>+</span></div><div class="vocab-type">noun</div><div class="vocab-def">The state of living in or occupying a place. <em>"Scientists are studying Mars for potential human habitation."</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== UNIT 10 ====== -->
+  <div class="section" id="unit10">
+    <div class="card-header" style="margin-bottom:16px">
+      <div><h1 class="section-title" style="margin-bottom:4px">Unit 10: Cultural Identity & Heritage</h1><p class="section-desc" style="margin-bottom:0">Amazigh Culture, Moroccan Identity, and Global Belonging</p></div>
+      <span class="unit-label">🇲🇦 UNIT 10</span>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('u10','reading',this)">📖 Reading</button>
+      <button class="tab-btn" onclick="switchTab('u10','writing',this)">✍️ Writing</button>
+      <button class="tab-btn" onclick="switchTab('u10','arabic',this)">🌐 Arabic Support</button>
+    </div>
+    <div class="unit-content active" id="u10-reading">
+      <div class="card">
+        <div class="passage">
+          <h4>📄 Text: Roots and Routes — Moroccan Identity in the 21st Century</h4>
+          <p>Morocco's cultural identity is among the most layered and historically rich in the world. At its foundation lies the Amazigh (Berber) civilization, whose roots in North Africa predate the Arab conquest by thousands of years. Amazigh people — the Imazighen — gave North Africa its first known inhabitants, its ancient agricultural knowledge, and a rich tradition of oral literature, music, weaving, and architecture that continues to shape Moroccan culture to this day.</p>
+          <p style="margin-top:12px">The 7th-century Arab conquest brought Islam and the Arabic language, profoundly reshaping Moroccan society. Over subsequent centuries, Morocco developed a distinctive Arab-Amazigh synthesis, further enriched by Andalusian influence following the expulsion of Muslims and Jews from Spain in 1492, Sub-Saharan African cultural contributions through trans-Saharan trade, and later, during the colonial period (1912-1956), by French and Spanish cultural influences. The result is a civilization of extraordinary complexity and beauty — what historian Juan Cole has called "a palimpsest," a document written over and over, with traces of every era still visible.</p>
+          <p style="margin-top:12px">The recognition of Tamazight (the Amazigh language) as an official language in Morocco's 2011 Constitution represented a historic turning point — a formal acknowledgment that Moroccan national identity is authentically plural, not monolithic. The Royal Institute of Amazigh Culture (IRCAM), established in 2001, has worked to standardize the Tifinagh script, develop educational materials, and support Amazigh cultural production. Yet many Amazigh cultural advocates argue that implementation of constitutional recognition has been too slow and incomplete.</p>
+          <p style="margin-top:12px">Moroccan literature, cinema, and music reflect this rich hybridity. Writers like Tahar Ben Jelloun and Abdelkebir Khatibi have explored the complexity of Moroccan identity in works that have earned international recognition. Gnawa music — a genre with deep roots in Sub-Saharan Africa — has achieved global popularity, performed at prestigious music festivals worldwide. The medinas of Fes and Marrakech, UNESCO World Heritage Sites, draw millions of visitors annually, testifying to the universal appeal of Morocco's built heritage.</p>
+          <p style="margin-top:12px">In an era of globalization, Moroccan youth face the complex challenge of navigating between tradition and modernity, between local roots and global aspirations. The most compelling vision is not one that forces a choice — Moroccan OR modern, Amazigh OR Arab OR global — but one that embraces multiple belongings as a source of strength rather than confusion. Identity, at its deepest level, is not a fixed destination but an ongoing journey.</p>
+        </div>
+
+        <div class="questions-section">
+          <h4>❓ Questions</h4>
+          <div class="question-item">
+            <div class="question-text">1. Who are the Imazighen according to the passage?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Arab settlers who arrived in North Africa in the 7th century.')">A. Arab settlers who arrived in North Africa in the 7th century.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','The indigenous Amazigh people, North Africa\'s first known inhabitants.')">B. The indigenous Amazigh people, North Africa's first known inhabitants.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Andalusian Muslims expelled from Spain in 1492.')">C. Andalusian Muslims expelled from Spain in 1492.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','French and Spanish colonizers of Morocco.')">D. French and Spanish colonizers of Morocco.</button>
+            </div>
+            <div class="feedback" id="fb-u10-q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">2. What does IRCAM stand for and what is its purpose?</div>
+            <div class="options">
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','International Research Center for African Monuments — preserving ancient buildings.')">A. International Research Center for African Monuments — preserving ancient buildings.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'correct','Royal Institute of Amazigh Culture — standardizing Tifinagh and supporting Amazigh cultural production.')">B. Royal Institute of Amazigh Culture — standardizing Tifinagh and supporting Amazigh cultural production.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Institute for Rabat Contemporary Architecture and Media.')">C. Institute for Rabat Contemporary Architecture and Media.</button>
+              <button class="option-btn" onclick="checkAnswer(this,'wrong','Internal Revenue Commission for Amazigh Museums.')">D. Internal Revenue Commission for Amazigh Museums.</button>
+            </div>
+            <div class="feedback" id="fb-u10-q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="question-text">3. True or False: According to the passage, Gnawa music has its origins in Arab culture.</div>
+            <div class="tf-row">
+              <button class="tf-btn" onclick="checkTF(this,'false','False! The passage states Gnawa music has deep roots in Sub-Saharan Africa.')">✅ True</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The passage clearly states Gnawa has "deep roots in Sub-Saharan Africa," not Arab culture.')">❌ False</button>
+            </div>
+            <div class="feedback" id="fb-u10-q3"></div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="revealAnswers('u10-answers')">👁️ Show All Answers</button>
+          <button class="btn btn-outline" onclick="hideAnswers('u10-answers')">🙈 Hide Answers</button>
+        </div>
+        <div class="answer-reveal" id="u10-answers">
+          <div class="divider"></div>
+          <div class="answer-box"><strong>Q1:</strong> B — The Imazighen are the indigenous Amazigh people and North Africa's first known inhabitants.</div>
+          <div class="answer-box"><strong>Q2:</strong> B — Royal Institute of Amazigh Culture, working to standardize Tifinagh and support Amazigh cultural production.</div>
+          <div class="answer-box"><strong>Q3:</strong> FALSE — Gnawa music has deep roots in Sub-Saharan Africa, not Arab culture.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u10-writing">
+      <div class="card">
+        <div class="card-title">✍️ Writing Task — Unit 10</div>
+        <div class="writing-prompt" style="margin-top:16px">
+          <h5>📝 Essay Prompt</h5>
+          <p style="font-size:0.9rem;color:#1e40af;margin-top:8px">"Morocco's cultural diversity is its greatest strength." Write an essay of 150-200 words expressing your opinion on this statement, using specific examples from Moroccan history and culture.</p>
+        </div>
+        <button class="btn btn-success" onclick="toggleModelAnswer('u10-model')">📄 Show Model Answer</button>
+        <div class="model-answer" id="u10-model" style="margin-top:16px">
+          <h5>✅ Model Answer</h5>
+          <p>I firmly believe that Morocco's extraordinary cultural diversity is indeed its greatest strength, providing the nation with a unique identity that draws from multiple civilizations while remaining distinctively Moroccan. Morocco's cultural tapestry weaves together Amazigh, Arab, Andalusian, African, and Mediterranean threads into a rich and complex whole that few nations can match.</p>
+          <p style="margin-top:10px">This diversity manifests in Morocco's remarkable cultural achievements. Gnawa music — rooted in Sub-Saharan Africa — has captivated global audiences, while Amazigh craftsmanship in carpet weaving, jewelry, and pottery is recognized worldwide. Moroccan cuisine, borrowing flavors and techniques from across the Mediterranean and beyond, is celebrated internationally. Writers like Tahar Ben Jelloun have brought Moroccan literary voices to a global readership.</p>
+          <p style="margin-top:10px">Furthermore, cultural diversity fosters creativity, tolerance, and adaptability — qualities that are invaluable in our increasingly interconnected world. Morocco's multilingual citizens — comfortable in Darija, Arabic, French, and often English or Spanish — are particularly well-equipped for global participation.</p>
+          <p style="margin-top:10px">In conclusion, Morocco's diversity, when embraced rather than suppressed, is an immense source of national pride, creative energy, and competitive advantage in the 21st century.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit-content" id="u10-arabic">
+      <div class="card">
+        <div class="card-title">🌐 Arabic Language Support / الدعم العربي</div>
+        <div style="margin-top:20px">
+          <div class="ar">
+            <p style="font-size:1.1rem;font-weight:700;color:#1e3a5f;margin-bottom:16px">الهوية الثقافية المغربية — أسئلة وإجابات</p>
+            <div style="background:#f8fafc;border-radius:12px;padding:16px;margin-bottom:12px;border-right:4px solid #3b82f6">
+              <p><strong>سؤال:</strong> من هم الأمازيغ؟</p>
+              <p style="margin-top:6px;color:#475569"><strong>الجواب:</strong> الأمازيغ هم السكان الأصليون لشمال أفريقيا، الذين عاشوا في هذه المنطقة آلاف السنين قبل الفتح العربي. لديهم لغتهم الخاصة (تيفيناغ) وتراثهم الثقافي الغني.</p>
+            </div>
+            <div style="background:#f8fafc;border-radius:12px;padding:16px;margin-bottom:12px;border-right:4px solid #10b981">
+              <p><strong>سؤال:</strong> ما أهمية دستور 2011 للهوية الأمازيغية؟</p>
+              <p style="margin-top:6px;color:#475569"><strong>الجواب:</strong> اعترف دستور 2011 بالأمازيغية لغةً رسميةً إلى جانب العربية لأول مرة في تاريخ المغرب، مما يُعدّ خطوةً تاريخيةً نحو الاعتراف بالتعددية الثقافية.</p>
+            </div>
+            <div style="background:#f8fafc;border-radius:12px;padding:16px;border-right:4px solid #f59e0b">
+              <p><strong>مفردات أساسية (English ↔ العربية):</strong></p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+                <div>Heritage — التراث</div><div>Identity — الهوية</div>
+                <div>Diversity — التنوع</div><div>Culture — الثقافة</div>
+                <div>Indigenous — أصلي</div><div>Tradition — التقليد</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== WRITING SECTION ====== -->
+  <div class="section" id="writing">
+    <h1 class="section-title">✍️ Writing Skills Center</h1>
+    <p class="section-desc">Master the art of BAC-level essay writing with model answers and guided practice.</p>
+
+    <div class="card">
+      <div class="card-title">📐 Essay Structure Guide</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px">
+        <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;padding:18px">
+          <div style="font-weight:700;color:#1d4ed8;font-size:0.95rem;margin-bottom:8px">1️⃣ Introduction</div>
+          <p style="font-size:0.82rem;color:#1e40af">Start general → narrow to topic → thesis statement. Never start with "I". Use a hook: statistic, quote, or striking fact. (30-40 words)</p>
+        </div>
+        <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:12px;padding:18px">
+          <div style="font-weight:700;color:#15803d;font-size:0.95rem;margin-bottom:8px">2️⃣ Body §1 — FOR</div>
+          <p style="font-size:0.82rem;color:#166534">State your point → give evidence → explain → link. Use: "Furthermore...", "In addition...", "Moreover..." (45-55 words)</p>
+        </div>
+        <div style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-radius:12px;padding:18px">
+          <div style="font-weight:700;color:#b45309;font-size:0.95rem;margin-bottom:8px">3️⃣ Body §2 — AGAINST</div>
+          <p style="font-size:0.82rem;color:#92400e">Counter-argument → evidence → explanation. Use: "However...", "On the other hand...", "Nevertheless..." (45-55 words)</p>
+        </div>
+        <div style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border-radius:12px;padding:18px">
+          <div style="font-weight:700;color:#7e22ce;font-size:0.95rem;margin-bottom:8px">4️⃣ Conclusion</div>
+          <p style="font-size:0.82rem;color:#6b21a8">Summarize → personal opinion → forward-looking statement. Use: "In conclusion...", "To sum up...", "Overall..." (25-35 words)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 Writing Task 1 — For & Against Essay</div>
+      <div class="writing-prompt" style="margin-top:16px">
+        <h5>📝 Topic: Should smartphones be banned in schools?</h5>
+        <p style="font-size:0.85rem;color:#1e40af;margin-top:8px">Write a balanced for-and-against essay (150-200 words). Use the PEEL structure and appropriate connectors.</p>
+        <div style="margin-top:10px;font-size:0.78rem;color:#64748b">
+          <strong>Useful vocabulary:</strong> distraction, academic performance, digital literacy, cyberbullying, educational tools, concentration, social interaction, access to information
+        </div>
+      </div>
+      <button class="btn btn-success" onclick="toggleModelAnswer('w1-model')">📄 Show Model Answer</button>
+      <div class="model-answer" id="w1-model" style="margin-top:16px">
+        <h5>✅ Model Answer — B1/B2 Level</h5>
+        <p>The debate over smartphone use in schools has intensified as devices have become indispensable tools of daily life. Those who advocate banning smartphones argue that they constitute a major source of distraction, undermining students' concentration and academic performance. Research indicates that the mere presence of a smartphone on a desk reduces cognitive capacity. Furthermore, smartphones facilitate cyberbullying and expose students to inappropriate content during school hours.</p>
+        <p style="margin-top:10px">However, opponents of a blanket ban contend that smartphones, when properly managed, are powerful educational tools. Students can access dictionaries, research databases, and language learning applications instantaneously. Moreover, banning smartphones entirely fails to prepare students for a professional world where digital literacy is increasingly non-negotiable.</p>
+        <p style="margin-top:10px">In conclusion, the solution lies not in prohibition but in regulation. Schools should establish clear policies governing smartphone use — permitting educational applications while restricting social media — ensuring that technology serves learning rather than distracting from it.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 Writing Task 2 — Opinion Essay</div>
+      <div class="writing-prompt" style="margin-top:16px">
+        <h5>📝 Topic: "Young people today are more selfish than previous generations."</h5>
+        <p style="font-size:0.85rem;color:#1e40af;margin-top:8px">Do you agree or disagree? Justify your opinion with reasons and examples. (150-200 words)</p>
+      </div>
+      <button class="btn btn-success" onclick="toggleModelAnswer('w2-model')">📄 Show Model Answer</button>
+      <div class="model-answer" id="w2-model" style="margin-top:16px">
+        <h5>✅ Model Answer — B2 Level</h5>
+        <p>The claim that today's youth are more selfish than previous generations is, in my view, a misreading of a complex social reality. While certain behaviors associated with individualism — social media self-promotion, consumer lifestyle choices — may superficially resemble selfishness, a deeper examination reveals a generation deeply committed to collective causes.</p>
+        <p style="margin-top:10px">Evidence contradicts the stereotype of the selfish millennial. Globally, young people have driven some of the most significant social movements of recent decades: Greta Thunberg's climate activism inspired millions; the Black Lives Matter movement was largely youth-led; in Morocco, young volunteers demonstrated remarkable solidarity during national disasters and pandemic response efforts. Digital technology, far from breeding isolation, has enabled young people to organize across borders for shared causes.</p>
+        <p style="margin-top:10px">Admittedly, economic pressures and competitive job markets may compel young people to prioritize individual survival. But this reflects structural circumstances, not moral character. In conclusion, today's youth, confronting crises of climate, inequality, and political dysfunction, demonstrate a generational commitment to change that is anything but selfish.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== EXAM 1 ====== -->
+  <div class="section" id="exam1">
+    <div class="exam-header">
+      <h3>📝 Practice Exam 1 — Technology & Society</h3>
+      <p>Read the passage carefully, then answer all 10 questions. Your score will be calculated automatically.</p>
+      <div class="exam-meta">
+        <div class="exam-meta-item">⏱️ Recommended time: 45 minutes</div>
+        <div class="exam-meta-item">📊 10 Questions</div>
+        <div class="exam-meta-item">🎯 BAC Level</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="passage">
+        <h4>📄 Reading Passage — The Social Media Revolution</h4>
+        <p>Social media has fundamentally transformed the way human beings communicate, consume information, and construct their identities. Platforms such as Facebook, Instagram, TikTok, and YouTube have amassed billions of users, creating unprecedented networks of human connection that transcend geographical and cultural boundaries. Within two decades, social media has evolved from a novelty to an indispensable infrastructure of modern life.</p>
+        <p style="margin-top:12px">The psychological impact of social media is a subject of intense research and debate. On the positive side, social media has enabled isolated individuals — those with rare diseases, minority identities, or niche interests — to find communities and support networks that would have been impossible in their immediate geographic environment. Research by the American Psychological Association found that positive social media use — characterized by meaningful interaction rather than passive scrolling — is associated with greater feelings of connection and wellbeing.</p>
+        <p style="margin-top:12px">However, the weight of evidence suggests that heavy social media use carries significant risks, particularly for adolescents. Social comparison — the tendency to evaluate oneself against others — is dramatically amplified by curated social media feeds presenting highlight reels rather than authentic lives. Studies linking increased social media use to higher rates of depression, anxiety, body image issues, and sleep disturbance among teenagers are now sufficiently numerous to constitute a public health concern. Former Facebook president Sean Parker has admitted that the platform was designed to exploit human psychological vulnerabilities — specifically our desire for social validation — to maximize engagement.</p>
+        <p style="margin-top:12px">The political dimension of social media presents equally complex challenges. While platforms have democratized political speech, enabling marginalized voices to reach large audiences, they have simultaneously created "echo chambers" — algorithmically reinforced bubbles where users are exposed primarily to opinions confirming their existing beliefs. Research suggests this polarization contributes to political extremism and makes democratic compromise increasingly difficult.</p>
+        <p style="margin-top:12px">Regulating social media presents genuinely difficult governance challenges. Absolute freedom of speech enables hate speech and disinformation; excessive regulation risks censorship and authoritarianism. The European Union's Digital Services Act represents the most comprehensive attempt to date to establish a framework that protects both free expression and public safety. For Morocco and other developing nations, the challenge is to develop regulatory capacity that protects citizens without stifling the genuine benefits social media provides.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 style="font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px">❓ Answer all 10 questions:</h4>
+
+      <!-- Exam Q1 -->
+      <div class="question-item">
+        <div class="question-text">1. What is the main topic of this passage?</div>
+        <label class="exam-option"><input type="radio" name="eq1" value="a"> A. The history of the internet</label>
+        <label class="exam-option"><input type="radio" name="eq1" value="b"> B. The impact of social media on society</label>
+        <label class="exam-option"><input type="radio" name="eq1" value="c"> C. How to use Facebook effectively</label>
+        <label class="exam-option"><input type="radio" name="eq1" value="d"> D. The dangers of video games for youth</label>
+      </div>
+
+      <!-- Exam Q2 -->
+      <div class="question-item">
+        <div class="question-text">2. According to positive research on social media, what type of use is linked to wellbeing?</div>
+        <label class="exam-option"><input type="radio" name="eq2" value="a"> A. Passive scrolling through feeds for hours</label>
+        <label class="exam-option"><input type="radio" name="eq2" value="b"> B. Following celebrities on Instagram</label>
+        <label class="exam-option"><input type="radio" name="eq2" value="c"> C. Meaningful interaction rather than passive scrolling</label>
+        <label class="exam-option"><input type="radio" name="eq2" value="d"> D. Creating viral content that gets many likes</label>
+      </div>
+
+      <!-- Exam Q3 -->
+      <div class="question-item">
+        <div class="question-text">3. What does "echo chamber" mean in this passage?</div>
+        <label class="exam-option"><input type="radio" name="eq3" value="a"> A. A recording studio for social media creators</label>
+        <label class="exam-option"><input type="radio" name="eq3" value="b"> B. A space where sound echoes, used for meditation</label>
+        <label class="exam-option"><input type="radio" name="eq3" value="c"> C. An online space where only diverse opinions are presented</label>
+        <label class="exam-option"><input type="radio" name="eq3" value="d"> D. An algorithmically reinforced bubble showing only confirming beliefs</label>
+      </div>
+
+      <!-- Exam Q4 -->
+      <div class="question-item">
+        <div class="question-text">4. True or False: Sean Parker admitted Facebook was designed to exploit human psychology.</div>
+        <label class="exam-option"><input type="radio" name="eq4" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="eq4" value="b"> B. False</label>
+      </div>
+
+      <!-- Exam Q5 -->
+      <div class="question-item">
+        <div class="question-text">5. Which EU legislation is mentioned as regulating social media?</div>
+        <label class="exam-option"><input type="radio" name="eq5" value="a"> A. The GDPR (General Data Protection Regulation)</label>
+        <label class="exam-option"><input type="radio" name="eq5" value="b"> B. The Digital Services Act</label>
+        <label class="exam-option"><input type="radio" name="eq5" value="c"> C. The Internet Freedom Charter</label>
+        <label class="exam-option"><input type="radio" name="eq5" value="d"> D. The Social Media Transparency Act</label>
+      </div>
+
+      <!-- Exam Q6 -->
+      <div class="question-item">
+        <div class="question-text">6. The word "unprecedented" in the first paragraph most likely means:</div>
+        <label class="exam-option"><input type="radio" name="eq6" value="a"> A. Very common and ordinary</label>
+        <label class="exam-option"><input type="radio" name="eq6" value="b"> B. Decreasing over time</label>
+        <label class="exam-option"><input type="radio" name="eq6" value="c"> C. Never seen or experienced before</label>
+        <label class="exam-option"><input type="radio" name="eq6" value="d"> D. Extremely predictable</label>
+      </div>
+
+      <!-- Exam Q7 -->
+      <div class="question-item">
+        <div class="question-text">7. Which of the following is NOT mentioned as a risk of heavy social media use among teenagers?</div>
+        <label class="exam-option"><input type="radio" name="eq7" value="a"> A. Depression and anxiety</label>
+        <label class="exam-option"><input type="radio" name="eq7" value="b"> B. Body image issues</label>
+        <label class="exam-option"><input type="radio" name="eq7" value="c"> C. Sleep disturbance</label>
+        <label class="exam-option"><input type="radio" name="eq7" value="d"> D. Poor mathematical ability</label>
+      </div>
+
+      <!-- Exam Q8 -->
+      <div class="question-item">
+        <div class="question-text">8. True or False: The passage argues that complete regulation of social media is the ideal solution.</div>
+        <label class="exam-option"><input type="radio" name="eq8" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="eq8" value="b"> B. False</label>
+      </div>
+
+      <!-- Exam Q9 -->
+      <div class="question-item">
+        <div class="question-text">9. How has social media POSITIVELY affected isolated individuals according to the passage?</div>
+        <label class="exam-option"><input type="radio" name="eq9" value="a"> A. It gives them access to free healthcare</label>
+        <label class="exam-option"><input type="radio" name="eq9" value="b"> B. It allows them to earn money through content creation</label>
+        <label class="exam-option"><input type="radio" name="eq9" value="c"> C. It enables them to find communities and support networks</label>
+        <label class="exam-option"><input type="radio" name="eq9" value="d"> D. It provides them with free education</label>
+      </div>
+
+      <!-- Exam Q10 -->
+      <div class="question-item">
+        <div class="question-text">10. What does the author suggest about social media regulation in developing nations like Morocco?</div>
+        <label class="exam-option"><input type="radio" name="eq10" value="a"> A. Morocco should copy all EU regulations immediately</label>
+        <label class="exam-option"><input type="radio" name="eq10" value="b"> B. Developing nations should avoid all social media regulation</label>
+        <label class="exam-option"><input type="radio" name="eq10" value="c"> C. Morocco needs regulatory capacity that protects citizens without suppressing benefits</label>
+        <label class="exam-option"><input type="radio" name="eq10" value="d"> D. Social media should be completely banned in developing countries</label>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="submitExam('exam1', {eq1:'b',eq2:'c',eq3:'d',eq4:'a',eq5:'b',eq6:'c',eq7:'d',eq8:'b',eq9:'c',eq10:'c'})">🎯 Submit & Get Score</button>
+        <button class="btn btn-outline" onclick="resetExam('exam1')">🔄 Reset Exam</button>
+      </div>
+
+      <div class="score-display" id="exam1-score">
+        <div class="score-number" id="exam1-num">0/10</div>
+        <div class="score-label">Your Score</div>
+        <div class="score-msg" id="exam1-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== EXAM 2 ====== -->
+  <div class="section" id="exam2">
+    <div class="exam-header">
+      <h3>📝 Practice Exam 2 — Environment & Development</h3>
+      <p>Read carefully and answer all 10 questions. Answers will be corrected automatically.</p>
+      <div class="exam-meta">
+        <div class="exam-meta-item">⏱️ Recommended time: 45 minutes</div>
+        <div class="exam-meta-item">📊 10 Questions</div>
+        <div class="exam-meta-item">🎯 BAC Level</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="passage">
+        <h4>📄 Reading Passage — Water: The Crisis of Our Century</h4>
+        <p>Of all the resources humanity depends upon, water is the most fundamentally irreplaceable. While energy systems can transition from fossil fuels to solar and wind, and food can be grown through innovative agricultural technologies, no technology can manufacture the water that living beings require. Yet the global water crisis — characterized by increasing scarcity, pollution, and inequitable distribution — represents one of the most severe threats to human security in the 21st century.</p>
+        <p style="margin-top:12px">The statistics are sobering. Approximately 2.2 billion people — nearly one in three humans — currently lack access to safely managed drinking water. Some 4.2 billion people lack safely managed sanitation services. Every day, more than 1,000 children under the age of five die from diarrheal diseases linked to unsafe water and poor sanitation — preventable deaths that constitute a moral catastrophe invisible to the comfortable populations of the developed world.</p>
+        <p style="margin-top:12px">Morocco faces acute water stress. The country is classified by international water stress indices as one of the most water-stressed nations in the MENA (Middle East and North Africa) region. Annual rainfall has declined by approximately 30% over recent decades, while population growth and economic development have increased demand. The agricultural sector — which accounts for approximately 80% of Morocco's water consumption — faces the twin pressures of growing food demand and diminishing water supply.</p>
+        <p style="margin-top:12px">The Moroccan government has responded with an ambitious National Water Plan and significant investment in desalination technology. Morocco's largest desalination plant, located in Agadir, now provides drinking water to hundreds of thousands of residents. Additional plants are under construction in El Jadida and Casablanca. Water recycling and precision irrigation technologies are being deployed to reduce agricultural water consumption. These investments represent a serious and relatively sophisticated response to a genuinely existential challenge.</p>
+        <p style="margin-top:12px">Yet technology alone cannot resolve the water crisis without addressing its social and political dimensions. Water pricing that reflects true scarcity, governance systems that prioritize human needs over commercial interests, and international cooperation on shared aquifers and river systems are all essential. Climate change will intensify water stress across the entire MENA region, making Morocco's investments in resilience all the more critical — and all the more insufficient if undertaken in isolation.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 style="font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px">❓ Answer all 10 questions:</h4>
+
+      <div class="question-item">
+        <div class="question-text">1. According to the passage, what makes water uniquely irreplaceable?</div>
+        <label class="exam-option"><input type="radio" name="e2q1" value="a"> A. Water is the only natural resource left on Earth</label>
+        <label class="exam-option"><input type="radio" name="e2q1" value="b"> B. Unlike energy and food, no technology can manufacture the water living beings need</label>
+        <label class="exam-option"><input type="radio" name="e2q1" value="c"> C. Water is the most expensive natural resource globally</label>
+        <label class="exam-option"><input type="radio" name="e2q1" value="d"> D. Water cannot be transported across national borders</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">2. How many people currently lack access to safely managed drinking water?</div>
+        <label class="exam-option"><input type="radio" name="e2q2" value="a"> A. 500 million people</label>
+        <label class="exam-option"><input type="radio" name="e2q2" value="b"> B. 1 billion people</label>
+        <label class="exam-option"><input type="radio" name="e2q2" value="c"> C. 2.2 billion people</label>
+        <label class="exam-option"><input type="radio" name="e2q2" value="d"> D. 4.2 billion people</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">3. True or False: Morocco's agricultural sector uses approximately 80% of its water supply.</div>
+        <label class="exam-option"><input type="radio" name="e2q3" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="e2q3" value="b"> B. False</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">4. Where is Morocco's largest desalination plant located?</div>
+        <label class="exam-option"><input type="radio" name="e2q4" value="a"> A. Casablanca</label>
+        <label class="exam-option"><input type="radio" name="e2q4" value="b"> B. Rabat</label>
+        <label class="exam-option"><input type="radio" name="e2q4" value="c"> C. Agadir</label>
+        <label class="exam-option"><input type="radio" name="e2q4" value="d"> D. Marrakech</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">5. The word "sobering" (paragraph 2) most likely means:</div>
+        <label class="exam-option"><input type="radio" name="e2q5" value="a"> A. Encouraging and optimistic</label>
+        <label class="exam-option"><input type="radio" name="e2q5" value="b"> B. Related to alcohol consumption</label>
+        <label class="exam-option"><input type="radio" name="e2q5" value="c"> C. Making you think seriously about a difficult reality</label>
+        <label class="exam-option"><input type="radio" name="e2q5" value="d"> D. Confusing and hard to understand</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">6. True or False: Morocco's annual rainfall has increased over recent decades.</div>
+        <label class="exam-option"><input type="radio" name="e2q6" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="e2q6" value="b"> B. False</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">7. What does MENA stand for?</div>
+        <label class="exam-option"><input type="radio" name="e2q7" value="a"> A. Morocco, Europe, North America</label>
+        <label class="exam-option"><input type="radio" name="e2q7" value="b"> B. Mediterranean Economic and North African alliance</label>
+        <label class="exam-option"><input type="radio" name="e2q7" value="c"> C. Middle East and North Africa</label>
+        <label class="exam-option"><input type="radio" name="e2q7" value="d"> D. Morocco, Egypt, Nigeria, Algeria</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">8. According to the author, what is needed beyond technology to solve the water crisis?</div>
+        <label class="exam-option"><input type="radio" name="e2q8" value="a"> A. Building more dams and reservoirs</label>
+        <label class="exam-option"><input type="radio" name="e2q8" value="b"> B. Water pricing, governance reform, and international cooperation</label>
+        <label class="exam-option"><input type="radio" name="e2q8" value="c"> C. Reducing the global population</label>
+        <label class="exam-option"><input type="radio" name="e2q8" value="d"> D. Moving populations to water-rich regions</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">9. True or False: The passage suggests that the deaths of 1,000+ children daily from water-related disease are widely known in wealthy countries.</div>
+        <label class="exam-option"><input type="radio" name="e2q9" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="e2q9" value="b"> B. False</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">10. What is the author's overall tone regarding Morocco's water management efforts?</div>
+        <label class="exam-option"><input type="radio" name="e2q10" value="a"> A. Entirely critical and negative</label>
+        <label class="exam-option"><input type="radio" name="e2q10" value="b"> B. Guardedly positive while noting limitations</label>
+        <label class="exam-option"><input type="radio" name="e2q10" value="c"> C. Completely optimistic and enthusiastic</label>
+        <label class="exam-option"><input type="radio" name="e2q10" value="d"> D. Neutral with no opinion expressed</label>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="submitExam('exam2', {e2q1:'b',e2q2:'c',e2q3:'a',e2q4:'c',e2q5:'c',e2q6:'b',e2q7:'c',e2q8:'b',e2q9:'b',e2q10:'b'})">🎯 Submit & Get Score</button>
+        <button class="btn btn-outline" onclick="resetExam('exam2')">🔄 Reset Exam</button>
+      </div>
+
+      <div class="score-display" id="exam2-score">
+        <div class="score-number" id="exam2-num">0/10</div>
+        <div class="score-label">Your Score</div>
+        <div class="score-msg" id="exam2-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== EXAM 3 ====== -->
+  <div class="section" id="exam3">
+    <div class="exam-header">
+      <h3>📝 Practice Exam 3 — Human Development & Society</h3>
+      <p>This is your final practice exam. Read carefully and show what you've learned!</p>
+      <div class="exam-meta">
+        <div class="exam-meta-item">⏱️ Recommended time: 45 minutes</div>
+        <div class="exam-meta-item">📊 10 Questions</div>
+        <div class="exam-meta-item">🎯 BAC Level</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="passage">
+        <h4>📄 Reading Passage — Migration: Opportunity or Desperation?</h4>
+        <p>Migration — the movement of people from one place to another — is among the oldest and most defining features of human history. From the first humans who walked out of Africa 70,000 years ago to the contemporary Syrian refugee who boards a rubber dinghy in the Aegean Sea, migration has been driven by an enduring combination of push factors (poverty, conflict, climate, persecution) and pull factors (economic opportunity, political stability, family reunification, educational access).</p>
+        <p style="margin-top:12px">Morocco occupies a distinctive position in global migration patterns. For decades, it served primarily as a country of emigration — sending workers to France, Spain, Belgium, and the Netherlands, where Moroccan diaspora communities now number in the millions and contribute billions of dirhams in annual remittances to the Moroccan economy. The Moroccan diaspora has produced scientists, artists, athletes, and politicians who have achieved distinction in their adopted countries while maintaining deep cultural connections to their Moroccan heritage.</p>
+        <p style="margin-top:12px">More recently, Morocco has also become a country of transit and destination for sub-Saharan African migrants seeking to reach Europe. This has created complex humanitarian challenges, as thousands of migrants gather in border areas facing dangerous crossing attempts, legal ambiguity, and in some cases, human rights abuses. Morocco's 2013 immigration reform policy — widely praised by international organizations — moved toward regularization and integration of documented migrants, recognizing their human dignity and potential economic contribution.</p>
+        <p style="margin-top:12px">The European debate on migration has become one of the most politically divisive issues of our era. Populist politicians have exploited public anxieties about cultural change and economic competition to advance anti-immigrant agendas. Yet the economic evidence consistently demonstrates that immigration, properly managed, is a net economic benefit to host countries: migrants typically fill labor shortages, contribute to innovation, start businesses, and pay more in taxes than they consume in public services — especially when they arrive young and are given opportunities to integrate.</p>
+        <p style="margin-top:12px">The ethical dimensions of migration policy cannot be separated from its practical ones. Under international law, every person has the right to seek asylum from persecution. The refoulement of refugees — returning them to places where they face serious harm — is prohibited. Yet systematic violations of these principles occur daily at Europe's borders. Migration will intensify as climate change renders portions of Africa, the Middle East, and South Asia increasingly uninhabitable. Managing it humanely and intelligently is not optional; it is one of the defining governance challenges of the century.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 style="font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:20px">❓ Answer all 10 questions:</h4>
+
+      <div class="question-item">
+        <div class="question-text">1. What are "push factors" in migration according to the passage?</div>
+        <label class="exam-option"><input type="radio" name="e3q1" value="a"> A. Economic opportunities that attract migrants to new countries</label>
+        <label class="exam-option"><input type="radio" name="e3q1" value="b"> B. Reasons that drive people to leave their home country (poverty, conflict, climate)</label>
+        <label class="exam-option"><input type="radio" name="e3q1" value="c"> C. Government programs that encourage emigration</label>
+        <label class="exam-option"><input type="radio" name="e3q1" value="d"> D. Physical forces that push migrants across borders</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">2. What economic contribution do Moroccan diaspora communities make to Morocco?</div>
+        <label class="exam-option"><input type="radio" name="e3q2" value="a"> A. They invest in Moroccan tourism exclusively</label>
+        <label class="exam-option"><input type="radio" name="e3q2" value="b"> B. They send billions of dirhams in annual remittances</label>
+        <label class="exam-option"><input type="radio" name="e3q2" value="c"> C. They provide free medical care in Morocco</label>
+        <label class="exam-option"><input type="radio" name="e3q2" value="d"> D. They bring technology patents back to Morocco</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">3. True or False: Morocco has never had any policies to protect or integrate migrants.</div>
+        <label class="exam-option"><input type="radio" name="e3q3" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="e3q3" value="b"> B. False</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">4. What does "refoulement" mean according to the passage?</div>
+        <label class="exam-option"><input type="radio" name="e3q4" value="a"> A. A French word for a warm welcome to refugees</label>
+        <label class="exam-option"><input type="radio" name="e3q4" value="b"> B. Returning refugees to places where they face serious harm</label>
+        <label class="exam-option"><input type="radio" name="e3q4" value="c"> C. A legal process for granting citizenship to migrants</label>
+        <label class="exam-option"><input type="radio" name="e3q4" value="d"> D. The right of migrants to seek employment abroad</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">5. What does economic evidence say about immigration's effect on host countries?</div>
+        <label class="exam-option"><input type="radio" name="e3q5" value="a"> A. Immigration always causes serious economic problems</label>
+        <label class="exam-option"><input type="radio" name="e3q5" value="b"> B. Immigration has no measurable economic impact</label>
+        <label class="exam-option"><input type="radio" name="e3q5" value="c"> C. Properly managed immigration is a net economic benefit</label>
+        <label class="exam-option"><input type="radio" name="e3q5" value="d"> D. Only skilled migrants benefit host economies</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">6. True or False: Morocco is described as only a country of emigration with no transit or destination migrants.</div>
+        <label class="exam-option"><input type="radio" name="e3q6" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="e3q6" value="b"> B. False</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">7. The word "divisive" (paragraph 4) most likely means:</div>
+        <label class="exam-option"><input type="radio" name="e3q7" value="a"> A. Something that brings people together</label>
+        <label class="exam-option"><input type="radio" name="e3q7" value="b"> B. Something that causes strong disagreement and division</label>
+        <label class="exam-option"><input type="radio" name="e3q7" value="c"> C. Something that is mathematically divisible</label>
+        <label class="exam-option"><input type="radio" name="e3q7" value="d"> D. Something that is not important politically</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">8. What future trend does the author predict will intensify migration?</div>
+        <label class="exam-option"><input type="radio" name="e3q8" value="a"> A. Increasing birth rates in developed countries</label>
+        <label class="exam-option"><input type="radio" name="e3q8" value="b"> B. The decline of the European economy</label>
+        <label class="exam-option"><input type="radio" name="e3q8" value="c"> C. Climate change making parts of Africa, the Middle East, and South Asia uninhabitable</label>
+        <label class="exam-option"><input type="radio" name="e3q8" value="d"> D. The collapse of international airline travel</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">9. True or False: Under international law, everyone has the right to seek asylum from persecution.</div>
+        <label class="exam-option"><input type="radio" name="e3q9" value="a"> A. True</label>
+        <label class="exam-option"><input type="radio" name="e3q9" value="b"> B. False</label>
+      </div>
+
+      <div class="question-item">
+        <div class="question-text">10. Which countries are mentioned as destinations for the Moroccan diaspora?</div>
+        <label class="exam-option"><input type="radio" name="e3q10" value="a"> A. Germany, USA, Canada, and Australia</label>
+        <label class="exam-option"><input type="radio" name="e3q10" value="b"> B. France, Spain, Belgium, and the Netherlands</label>
+        <label class="exam-option"><input type="radio" name="e3q10" value="c"> C. Italy, Portugal, Greece, and Turkey</label>
+        <label class="exam-option"><input type="radio" name="e3q10" value="d"> D. Saudi Arabia, UAE, Qatar, and Kuwait</label>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="submitExam('exam3', {e3q1:'b',e3q2:'b',e3q3:'b',e3q4:'b',e3q5:'c',e3q6:'b',e3q7:'b',e3q8:'c',e3q9:'a',e3q10:'b'})">🎯 Submit & Get Score</button>
+        <button class="btn btn-outline" onclick="resetExam('exam3')">🔄 Reset Exam</button>
+      </div>
+
+      <div class="score-display" id="exam3-score">
+        <div class="score-number" id="exam3-num">0/10</div>
+        <div class="score-label">Your Score</div>
+        <div class="score-msg" id="exam3-msg"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ===================== NAVIGATION =====================
+let totalAnswered = 0;
+let totalQuestions = 60;
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#sidebar nav a').forEach(a => a.classList.remove('active'));
+  const section = document.getElementById(id);
+  if (section) section.classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  const names = {
+    home:'Dashboard', tips:'Study Tips', units:'All Units',
+    unit1:'Unit 1 — Technology', unit2:'Unit 2 — Environment',
+    unit3:'Unit 3 — Globalization', unit4:'Unit 4 — Youth & Society',
+    unit5:'Unit 5 — Education', unit6:'Unit 6 — Health',
+    unit7:'Unit 7 — Media', unit8:'Unit 8 — Human Rights',
+    unit9:'Unit 9 — Science', unit10:'Unit 10 — Cultural Identity',
+    writing:'Writing Skills', exam1:'Practice Exam 1',
+    exam2:'Practice Exam 2', exam3:'Practice Exam 3'
+  };
+  document.getElementById('currentSection').textContent = names[id] || id;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  closeSidebar();
+}
+
+// MOBILE
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+});
+
+document.getElementById('overlay').addEventListener('click', closeSidebar);
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// ===================== TABS =====================
+function switchTab(unit, tab, btn) {
+  document.querySelectorAll(`[id^="${unit}-"]`).forEach(el => el.classList.remove('active'));
+  const target = document.getElementById(`${unit}-${tab}`);
+  if (target) target.classList.add('active');
+  const tabRow = btn.closest('.tab-row');
+  tabRow.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===================== MCQ =====================
+function checkAnswer(btn, result, explanation) {
+  const options = btn.closest('.options');
+  options.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
+  const qItem = btn.closest('.question-item');
+  const feedbackEls = qItem.querySelectorAll('.feedback');
+  let fb = feedbackEls[0];
+  if (!fb) { fb = document.createElement('div'); fb.className = 'feedback'; qItem.appendChild(fb); }
+  if (result === 'correct') {
+    btn.classList.add('correct');
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ Correct! ' + explanation;
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback wrong show';
+    fb.innerHTML = '❌ Wrong. ' + explanation;
+    options.querySelectorAll('.option-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'correct'")) b.classList.add('correct');
+    });
+  }
+  incrementProgress();
+}
+
+// ===================== TRUE/FALSE =====================
+function checkTF(btn, result, explanation) {
+  const row = btn.closest('.tf-row');
+  row.querySelectorAll('.tf-btn').forEach(b => b.classList.add('disabled'));
+  const qItem = btn.closest('.question-item');
+  let fb = qItem.querySelector('.feedback');
+  if (!fb) { fb = document.createElement('div'); fb.className = 'feedback'; qItem.appendChild(fb); }
+  if (result === 'true') {
+    btn.classList.add('correct');
+    fb.className = 'feedback correct show';
+    fb.innerHTML = '✅ ' + explanation;
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback wrong show';
+    fb.innerHTML = '❌ ' + explanation;
+  }
+  incrementProgress();
+}
+
+// ===================== VOCAB =====================
+function toggleVocabDef(card) {
+  const def = card.querySelector('.vocab-def');
+  const arrow = card.querySelector('.vocab-word span');
+  def.classList.toggle('show');
+  if (arrow) arrow.textContent = def.classList.contains('show') ? '−' : '+';
+}
+
+function revealAllVocab(gridId) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.querySelectorAll('.vocab-card').forEach(card => {
+    card.querySelector('.vocab-def').classList.add('show');
+    const arrow = card.querySelector('.vocab-word span');
+    if (arrow) arrow.textContent = '−';
+  });
+}
+
+// ===================== ANSWERS =====================
+function revealAnswers(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('show');
+}
+
+function hideAnswers(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+
+// ===================== MODEL ANSWERS =====================
+function toggleModelAnswer(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isShown = el.classList.contains('show');
+  el.classList.toggle('show');
+  const btn = el.previousElementSibling;
+  if (btn) btn.textContent = isShown ? '📄 Show Model Answer' : '🙈 Hide Model Answer';
+}
+
+// ===================== ACCORDION =====================
+function toggleAccordion(item) {
+  const isOpen = item.classList.contains('open');
+  item.closest('.card').querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ===================== EXAM SCORING =====================
+function submitExam(examId, answers) {
+  const questions = Object.keys(answers);
+  let score = 0;
+  let attempted = 0;
+
+  questions.forEach(name => {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    const options = document.querySelectorAll(`input[name="${name}"]`);
+    options.forEach(opt => {
+      const label = opt.closest('.exam-option');
+      if (opt.value === answers[name]) label.classList.add('correct-ans');
+    });
+    if (selected) {
+      attempted++;
+      const label = selected.closest('.exam-option');
+      if (selected.value === answers[name]) {
+        score++;
+      } else {
+        label.classList.add('wrong-ans');
+      }
+      selected.disabled = true;
+    }
+  });
+
+  const scoreEl = document.getElementById(examId + '-score');
+  const numEl = document.getElementById(examId + '-num');
+  const msgEl = document.getElementById(examId + '-msg');
+
+  numEl.textContent = score + '/10';
+  let msg = '';
+  if (score === 10) msg = '🏆 Perfect score! Outstanding work! You are BAC-ready!';
+  else if (score >= 8) msg = '🌟 Excellent! Very strong performance. Keep it up!';
+  else if (score >= 6) msg = '👍 Good job! Review the questions you missed and try again.';
+  else if (score >= 4) msg = '📚 Keep practicing! Focus on reading strategies and vocabulary.';
+  else msg = '💪 Don\'t give up! Re-read the passage and study the vocabulary section.';
+
+  msgEl.textContent = msg;
+  scoreEl.classList.add('show');
+  scoreEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  incrementProgress(score);
+}
+
+function resetExam(examId) {
+  document.querySelectorAll(`#${examId} input[type="radio"]`).forEach(input => {
+    input.checked = false;
+    input.disabled = false;
+    const label = input.closest('.exam-option');
+    label.classList.remove('correct-ans', 'wrong-ans');
+  });
+  const scoreEl = document.getElementById(examId + '-score');
+  if (scoreEl) scoreEl.classList.remove('show');
+}
+
+// ===================== PROGRESS =====================
+function incrementProgress(n = 1) {
+  totalAnswered = Math.min(totalAnswered + n, totalQuestions);
+  const pct = Math.round((totalAnswered / totalQuestions) * 100);
+  document.getElementById('globalProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+  const countEl = document.getElementById('answeredCount');
+  if (countEl) countEl.textContent = totalAnswered;
+}
+
+// ===================== KEYBOARD NAV =====================
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSidebar();
+});
+</script>
+</body>
+</html>
