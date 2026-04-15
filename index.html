@@ -125,24 +125,7 @@
 /* Tabs */
 .dark .tab-btn { background: var(--card); border-color: var(--border); color: #cbd5e1; }
 .dark .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-/* Exams Section (National Exams) */
-.dark .exams-section { background-color: #0a0c10; color: #e4e4e7; }
-.dark .exams-section .section-title { color: white !important; }
-.dark .exams-section .section-subtitle { color: #a1a1aa !important; }
-.dark .exam-card { background: #1e293b; border-color: #334155; }
-.dark .exam-card:hover { border-color: var(--accent); }
-.dark .card-year { color: #f1f5f9; }
-.dark .card-session { color: #94a3b8; }
-.dark .exam-link { color: #60a5fa; }
-.dark .filter-btn { background: #1e293b; border-color: #334155; color: #cbd5e1; }
-.dark .filter-btn:hover { background: #2d3a4f; border-color: #64748b; color: white; }
-.dark .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
-
-/* Community Box */
-.dark .community-box p { color: #cbd5e1; }
-.dark .telegram, .dark .whatsapp { color: white !important; }
-
+ 
 /* Sidebar */
 .dark #sidebar { background: #0f172a; }
 .dark #sidebar .logo h1 { color: white; }
@@ -192,11 +175,7 @@
     transform: translateY(0);
   }
 }
-.community-box p {
-  font-size: 16px;
-  margin-bottom: 15px;
-  color: #ccc;
-}
+ 
 
 .community-buttons {
   display: flex;
@@ -770,32 +749,42 @@
     font-family: 'Inter', sans-serif;
   }
 
-/* ---------- NATIONAL EXAMS SECTION (FIXED) ---------- */
+/* ---------- NATIONAL EXAMS SECTION (CONSISTENT) ---------- */
 #national-exams {
-  padding: 2rem 1.5rem !important; /* override default .section padding */
+  padding: 2rem 1.5rem !important;
 }
 
-.exams-container {
+.exams-section-inner {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 0;
+  background: transparent;
+  color: var(--text);
 }
 
 .exams-title {
   font-size: 2.2rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: var(--primary);
+}
+
+.dark .exams-title {
+  color: #f1f5f9;
+}
+
+.dark .exams-subtitle {
+  color: #a1a1aa;
 }
 
 .exams-subtitle {
   font-size: 1rem;
-  color: #a1a1aa;
+  color: var(--muted);
   margin-bottom: 2rem;
 }
 
-/* Filter Buttons - keep existing */
+/* Filter Buttons */
 .exam-filter {
   display: flex;
   flex-wrap: wrap;
@@ -804,9 +793,9 @@
 }
 
 .filter-btn {
-  background: #1c1c1f;
-  border: 1px solid #2e2e35;
-  color: #d4d4d8;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
   padding: 0.5rem 1.2rem;
   font-size: 0.9rem;
   font-weight: 500;
@@ -816,52 +805,53 @@
 }
 
 .filter-btn:hover {
-  background: #2a2a30;
-  border-color: #4a4a55;
-  color: #ffffff;
-}
-
-.filter-btn.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
+  background: var(--accent);
+  border-color: var(--accent);
   color: white;
 }
 
-/* Exams Grid - keep existing */
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Exams Grid */
 .exams-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.25rem;
 }
 
-/* Exam Card - keep existing */
+/* Exam Card */
 .exam-card {
-  background: #18181b;
-  border: 1px solid #27272a;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  transition: transform 0.15s, border-color 0.15s;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .exam-card:hover {
-  border-color: #3b82f6;
+  border-color: var(--accent);
   transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 .card-year {
   font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--primary);
   line-height: 1.2;
   margin-bottom: 0.25rem;
 }
 
 .card-session {
   font-size: 0.9rem;
-  color: #a1a1aa;
+  color: var(--muted);
   margin-bottom: 1.5rem;
 }
 
@@ -872,14 +862,14 @@
   gap: 0.3rem;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #3b82f6;
+  color: var(--accent);
   text-decoration: none;
   border-bottom: 1.5px solid transparent;
   transition: border-color 0.15s;
 }
 
 .exam-link:hover {
-  border-bottom-color: #3b82f6;
+  border-bottom-color: var(--accent);
 }
 
 .exam-link span {
@@ -889,6 +879,28 @@
 
 .exam-card.hidden {
   display: none;
+}
+
+/* Dark mode overrides - now automatically handled by variables */
+.dark .exams-title {
+  color: #f1f5f9;
+}
+
+.dark .exam-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.dark .exam-card:hover {
+  border-color: var(--accent);
+}
+
+.dark .card-year {
+  color: #f1f5f9;
+}
+
+.dark .card-session {
+  color: #94a3b8;
 }
 
 /* Responsive */
@@ -901,62 +913,7 @@
     font-size: 1.8rem;
   }
 }
-
-/* Dark mode overrides */
-.dark #national-exams {
-  background-color: #0f172a;
-}
-
-.dark .exams-title {
-  color: #ffffff !important;
-}
-
-.dark .exams-subtitle {
-  color: #a1a1aa !important;
-}
-
-.dark .exam-card {
-  background: #1e293b;
-  border-color: #334155;
-}
-
-.dark .exam-card:hover {
-  border-color: #3b82f6;
-}
-
-.dark .card-year {
-  color: #f1f5f9;
-}
-
-.dark .card-session {
-  color: #94a3b8;
-}
-
-.dark .exam-link {
-  color: #60a5fa;
-}
-
-.dark .filter-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #cbd5e1;
-}
-
-.dark .filter-btn:hover {
-  background: #2d3a4f;
-  border-color: #64748b;
-  color: #ffffff;
-}
-
-.dark .filter-btn.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: white;
-}
-
-.dark .community-box p {
-  color: #cbd5e1;
-}
+ 
 </style>
 </head>
 <body>
@@ -2502,8 +2459,8 @@
   </div>
       <!-- ========== NATIONAL EXAMS SECTION ========== -->
 <section class="section" id="national-exams">
-  <div class="exams-section-inner" style="padding: 4rem 0; background-color: #0f0f10; color: #e4e4e7;">
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
+<div class="exams-section-inner" style="padding: 4rem 0;">
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
       <h2 class="section-title" style="color: #ffffff;">📄 National Exams – 2BAC English (مسلك علمي)</h2>
       <p class="section-subtitle" style="color: #a1a1aa;">Official past papers – الدورة-العادية & الدورة-الاستدراكية (2011–2023)</p>
 
