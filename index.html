@@ -582,6 +582,141 @@
     cursor: pointer; background: #fff; transition: all 0.2s;
     font-family: 'Inter', sans-serif;
   }
+
+  /* ---------- NATIONAL EXAMS SECTION ---------- */
+.exams-section {
+  padding: 4rem 0;
+  background-color: #0f0f10;
+  color: #e4e4e7;
+}
+
+.exams-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: #a1a1aa;
+  margin-bottom: 2rem;
+}
+
+/* Filter Buttons */
+.exam-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.filter-btn {
+  background: #1c1c1f;
+  border: 1px solid #2e2e35;
+  color: #d4d4d8;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #2a2a30;
+  border-color: #4a4a55;
+  color: #ffffff;
+}
+
+.filter-btn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* Exams Grid */
+.exams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Exam Card */
+.exam-card {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.exam-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-3px);
+}
+
+.card-year {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.card-session {
+  font-size: 0.9rem;
+  color: #a1a1aa;
+  margin-bottom: 1.5rem;
+}
+
+.exam-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #3b82f6;
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.exam-link:hover {
+  border-bottom-color: #3b82f6;
+}
+
+.exam-link span {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Hide filtered cards */
+.exam-card.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .exams-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
   .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
   .unit-content { display: none; }
@@ -1595,6 +1730,180 @@
       </div>
     </div>
   </div>
+   <!-- ========== NATIONAL EXAMS SECTION ========== -->
+<section class="exams-section" id="national-exams">
+  <div class="container">
+    <h2 class="section-title">📄 National Exams – 2BAC English (Scientific Stream)</h2>
+    <p class="section-subtitle">Official past papers – Normal & Resit sessions (2011–2023)</p>
+
+    <!-- Year Filter -->
+    <div class="exam-filter">
+      <button class="filter-btn active" data-year="all">All Years</button>
+      <button class="filter-btn" data-year="2023">2023</button>
+      <button class="filter-btn" data-year="2022">2022</button>
+      <button class="filter-btn" data-year="2021">2021</button>
+      <button class="filter-btn" data-year="2020">2020</button>
+      <button class="filter-btn" data-year="2019">2019</button>
+      <button class="filter-btn" data-year="2018">2018</button>
+      <button class="filter-btn" data-year="2017">2017</button>
+      <button class="filter-btn" data-year="2016">2016</button>
+      <button class="filter-btn" data-year="2015">2015</button>
+      <button class="filter-btn" data-year="2014">2014</button>
+      <button class="filter-btn" data-year="2013">2013</button>
+      <button class="filter-btn" data-year="2012">2012</button>
+      <button class="filter-btn" data-year="2011">2011</button>
+    </div>
+
+    <!-- Exams Grid -->
+    <div class="exams-grid" id="examsGrid">
+      <!-- 2023 -->
+      <div class="exam-card" data-year="2023">
+        <div class="card-year">2023</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2023-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2023">
+        <div class="card-year">2023</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2023-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2022 -->
+      <div class="exam-card" data-year="2022">
+        <div class="card-year">2022</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2022-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2022">
+        <div class="card-year">2022</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2022-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2021 -->
+      <div class="exam-card" data-year="2021">
+        <div class="card-year">2021</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2021-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <!-- 2021 Resit not provided – omit or keep as placeholder? We'll follow provided files only -->
+      <!-- 2021 Resit missing in provided list -->
+
+      <!-- 2020 -->
+      <div class="exam-card" data-year="2020">
+        <div class="card-year">2020</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2020-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <!-- 2020 Resit not provided -->
+
+      <!-- 2019 -->
+      <div class="exam-card" data-year="2019">
+        <div class="card-year">2019</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2019-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2019">
+        <div class="card-year">2019</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2019-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2018 -->
+      <div class="exam-card" data-year="2018">
+        <div class="card-year">2018</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2018-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2018">
+        <div class="card-year">2018</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2018-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2017 -->
+      <div class="exam-card" data-year="2017">
+        <div class="card-year">2017</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2017-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2017">
+        <div class="card-year">2017</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2017-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2016 -->
+      <div class="exam-card" data-year="2016">
+        <div class="card-year">2016</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2016-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2016">
+        <div class="card-year">2016</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2016-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2015 -->
+      <div class="exam-card" data-year="2015">
+        <div class="card-year">2015</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2015-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <!-- 2015 Resit not provided -->
+
+      <!-- 2014 -->
+      <div class="exam-card" data-year="2014">
+        <div class="card-year">2014</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2014-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2014">
+        <div class="card-year">2014</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2014-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2013 -->
+      <div class="exam-card" data-year="2013">
+        <div class="card-year">2013</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2013-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2013">
+        <div class="card-year">2013</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2013-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2012 -->
+      <div class="exam-card" data-year="2012">
+        <div class="card-year">2012</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2012-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2012">
+        <div class="card-year">2012</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2012-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+
+      <!-- 2011 -->
+      <div class="exam-card" data-year="2011">
+        <div class="card-year">2011</div>
+        <div class="card-session">Normal Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2011-مسلك-علمي-الدورة-العادية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+      <div class="exam-card" data-year="2011">
+        <div class="card-year">2011</div>
+        <div class="card-session">Resit Session</div>
+        <a href="assets/exams/الامتحان-الوطني-في-اللغة-الإنجليزية-2011-مسلك-علمي-الدورة-الاستدراكية.pdf" target="_blank" class="exam-link">View PDF <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ========== END NATIONAL EXAMS SECTION ========== -->
 
   <!-- ====== UNIT 10 ====== -->
   <div class="section" id="unit10">
@@ -2331,6 +2640,43 @@ function incrementProgress(n = 1) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSidebar();
 });
+/* ---------- NATIONAL EXAMS FILTER ---------- */
+(function() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const examCards = document.querySelectorAll('.exam-card');
+
+  if (!filterButtons.length || !examCards.length) return;
+
+  function filterExams(year) {
+    examCards.forEach(card => {
+      if (year === 'all' || card.dataset.year === year) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  function setActiveButton(activeBtn) {
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    activeBtn.classList.add('active');
+  }
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const year = this.dataset.year;
+      filterExams(year);
+      setActiveButton(this);
+    });
+  });
+
+  // Ensure "All Years" is active by default
+  const defaultActive = document.querySelector('.filter-btn.active');
+  if (!defaultActive) {
+    const allBtn = document.querySelector('.filter-btn[data-year="all"]');
+    if (allBtn) allBtn.classList.add('active');
+  }
+})();
 </script>
 </body>
 </html>
