@@ -38,6 +38,57 @@
     line-height: 1.9;
   }
 
+ .community-box {
+  margin-top: 60px;
+  padding: 20px;
+  text-align: center;
+  
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.community-box p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.community-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  color: #fff;
+}
+
+.telegram {
+  background: #0088cc;
+}
+
+.whatsapp {
+  background: #25D366;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
   /* SIDEBAR */
   #sidebar {
     position: fixed; top: 0; left: 0;
@@ -867,7 +918,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- ====== UNITS OVERVIEW ====== -->
   <div class="section" id="units">
     <h1 class="section-title">📖 All Units</h1>
@@ -1902,6 +1953,20 @@
       </div>
     </div>
   </div>
+   <div class="community-box">
+  
+  <p>📢 بغيتي توصل لكل جديد ديال الدروس والامتحانات؟</p>
+  
+  <div class="community-buttons">
+    <a href="https://t.me/bac_rox" target="_blank" class="btn telegram">
+      Telegram
+    </a>
+
+    <a href="https://chat.whatsapp.com/KNUdAKIh0QDLDrvWzrWrPy" target="_blank" class="btn whatsapp">
+      WhatsApp
+    </a>
+  </div>
+</div>
 </section>
 <!-- ========== END NATIONAL EXAMS SECTION ========== -->
 
