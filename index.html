@@ -29,7 +29,143 @@
     color: var(--text);
     line-height: 1.7;
   }
+/* ---------- FULLY FIXED DARK MODE STYLES ---------- */
+/* Paste this entire block at the end of your existing <style> section, */
+/* replacing any duplicate or conflicting dark mode rules.             */
 
+.dark {
+  --primary: #1e2a44;
+  --accent: #3b82f6;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --bg: #0f172a;
+  --card: #1e293b;
+  --border: #334155;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+}
+
+/* Base overrides */
+.dark body { background: var(--bg); color: var(--text); }
+.dark .card { background: var(--card); border-color: var(--border); }
+.dark .topbar { background: rgba(15, 23, 42, 0.95); border-bottom-color: var(--border); }
+.dark .breadcrumb { color: var(--muted); }
+.dark .breadcrumb span { color: var(--text); }
+.dark .progress-global { color: var(--muted); }
+.dark .progress-bar-wrap { background: var(--border); }
+.dark .hero { background: linear-gradient(135deg, #1e2a44, #1e3a5f, #312e81); }
+.dark .hero p { color: #bfdbfe; }
+.dark .badge { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #f1f5f9; }
+.dark .section-title { color: var(--text); }
+.dark .section-desc { color: var(--muted); }
+
+/* Cards & Units */
+.dark .stat-card { background: var(--card); border-color: var(--border); }
+.dark .stat-number { color: #f1f5f9; }
+.dark .stat-label { color: var(--muted); }
+.dark .unit-card { background: var(--card); border-color: var(--border); }
+.dark .unit-card h3 { color: #f1f5f9; }
+.dark .unit-card p { color: var(--muted); }
+.dark .unit-num { color: #60a5fa; }
+.dark .tag { background: #334155; color: #cbd5e1; }
+
+/* Passages & Questions */
+.dark .passage { background: #0f172a; color: #cbd5e1; border-left-color: var(--accent); }
+.dark .passage h4 { color: #f1f5f9; }
+.dark .questions-section h4 { color: #f1f5f9; }
+.dark .question-text { color: #e2e8f0; }
+
+/* Buttons */
+.dark .btn { color: #fff; }
+.dark .btn-primary { background: var(--accent); color: white; }
+.dark .btn-success { background: var(--success); color: white; }
+.dark .btn-warning { background: var(--warning); color: white; }
+.dark .btn-outline { background: transparent; border-color: var(--border); color: var(--text); }
+.dark .btn-outline:hover { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* Options & Inputs */
+.dark .option-btn,
+.dark .tf-btn { background: var(--card); border-color: var(--border); color: #e2e8f0; }
+.dark .option-btn:hover,
+.dark .tf-btn:hover { background: #2d3a4f; border-color: var(--accent); }
+.dark .short-answer-input { background: var(--card); border-color: var(--border); color: var(--text); }
+.dark .short-answer-input:focus { border-color: var(--accent); }
+
+/* Vocab & Accordion */
+.dark .vocab-card { background: var(--card); border-color: var(--border); }
+.dark .vocab-word { color: #f1f5f9; }
+.dark .vocab-def { color: var(--muted); border-top-color: var(--border); }
+.dark .vocab-type { color: #60a5fa; }
+.dark .accordion-header { background: var(--card); color: #f1f5f9; }
+.dark .accordion-header:hover { background: #2d3a4f; }
+.dark .accordion-body { background: #0f172a; color: #cbd5e1; border-top-color: var(--border); }
+
+/* Exam Header & Scores */
+.dark .exam-header { background: linear-gradient(135deg, #1e2a44, #1e3a5f); }
+.dark .exam-meta-item { color: #93c5fd; }
+.dark .score-display { background: linear-gradient(135deg, #064e3b, #0d2e24); border-color: var(--success); }
+.dark .score-number { color: #34d399; }
+.dark .score-label { color: var(--muted); }
+.dark .score-msg { color: var(--text); }
+
+/* Feedback & Answers */
+.dark .feedback.correct { background: #064e3b; color: #d1fae5; border-left-color: #10b981; }
+.dark .feedback.wrong { background: #7f1d1d; color: #fee2e2; border-left-color: #ef4444; }
+.dark .answer-box { background: #2d1a0e; border-color: #f59e0b; color: #fde68a; }
+.dark .answer-box strong { color: #fbbf24; }
+
+/* Writing & Models */
+.dark .writing-prompt { background: linear-gradient(135deg, #1e2a44, #1e293b); border-color: var(--border); }
+.dark .writing-prompt h5 { color: #f1f5f9; }
+.dark .model-answer { background: var(--card); border-color: var(--border); }
+.dark .model-answer p { color: #cbd5e1; }
+.dark .model-answer h5 { color: var(--success); }
+
+/* Tabs */
+.dark .tab-btn { background: var(--card); border-color: var(--border); color: #cbd5e1; }
+.dark .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* Exams Section (National Exams) */
+.dark .exams-section { background-color: #0a0c10; color: #e4e4e7; }
+.dark .exams-section .section-title { color: white !important; }
+.dark .exams-section .section-subtitle { color: #a1a1aa !important; }
+.dark .exam-card { background: #1e293b; border-color: #334155; }
+.dark .exam-card:hover { border-color: var(--accent); }
+.dark .card-year { color: #f1f5f9; }
+.dark .card-session { color: #94a3b8; }
+.dark .exam-link { color: #60a5fa; }
+.dark .filter-btn { background: #1e293b; border-color: #334155; color: #cbd5e1; }
+.dark .filter-btn:hover { background: #2d3a4f; border-color: #64748b; color: white; }
+.dark .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* Community Box */
+.dark .community-box p { color: #cbd5e1; }
+.dark .telegram, .dark .whatsapp { color: white !important; }
+
+/* Sidebar */
+.dark #sidebar { background: #0f172a; }
+.dark #sidebar .logo h1 { color: white; }
+.dark #sidebar .logo p { color: #93c5fd; }
+.dark #sidebar nav .nav-section { color: #60a5fa; }
+.dark #sidebar nav a { color: #cbd5e1; }
+.dark #sidebar nav a:hover { background: rgba(255,255,255,0.1); color: white; }
+.dark #sidebar nav a.active { background: rgba(59,130,246,0.25); color: #60a5fa; }
+
+/* Misc */
+.dark .divider { background: var(--border); }
+.dark .menu-toggle { background: var(--primary); color: white; }
+.dark .overlay { background: rgba(0,0,0,0.7); }
+.dark .unit-label { background: #1e2a44; color: #93c5fd; border-color: var(--accent); }
+.dark .lang-pill { background: var(--card); }
+.dark .lang-pill button { color: #cbd5e1; }
+.dark .lang-pill button.active { background: var(--primary); color: white; }
+.dark #sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); }
+.dark mark { background: #78350f; color: #fde68a; }
+.dark .exam-option { background: var(--card); border-color: var(--border); color: #e2e8f0; }
+.dark .exam-option:hover { background: #2d3a4f; }
+.dark .card-title { color: #f1f5f9; }
+.dark .card-subtitle { color: var(--muted); }
   .ar {
     direction: rtl;
     text-align: right;
@@ -775,7 +911,22 @@
 </style>
 </head>
 <body>
-
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="breadcrumb">2BAC English Master / <span id="currentSection">Dashboard</span></div>
+  <div class="progress-global">
+    <span>Overall Progress</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="globalProgress" style="width:0%"></div>
+    </div>
+    <span id="progressText">0%</span>
+  </div>
+  <!-- DARK MODE TOGGLE -->
+  <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+    <span class="toggle-icon">🌙</span>
+    <span class="toggle-text">Dark</span>
+  </button>
+</div>
 <!-- MOBILE MENU TOGGLE -->
 <button class="menu-toggle" id="menuToggle">☰</button>
 <div class="overlay" id="overlay"></div>
@@ -816,17 +967,7 @@
 
 <!-- MAIN -->
 <main id="main">
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="breadcrumb">2BAC English Master / <span id="currentSection">Dashboard</span></div>
-    <div class="progress-global">
-      <span>Overall Progress</span>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="globalProgress" style="width:0%"></div>
-      </div>
-      <span id="progressText">0%</span>
-    </div>
-  </div>
+  
 
   <!-- ====== HOME ====== -->
   <div class="section active" id="home">
@@ -1281,7 +1422,7 @@
             <div class="question-text">3. True or False: The passage claims globalization has benefited everyone equally.</div>
             <div class="tf-row">
               <button class="tf-btn" onclick="checkTF(this,'false','False! The passage states benefits have been distributed UNEQUALLY.')">✅ True</button>
-              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The text explicitly says benefits have been distributed "profoundly unequally."')">❌ False</button>
+              <button class="tf-btn" onclick="checkTF(this,'true','Correct! The text explicitly says benefits have been distributed &quot;profoundly unequally.&quot;')">❌ False</button>
             </div>
             <div class="feedback" id="fb-u3-q3"></div>
           </div>
@@ -2742,6 +2883,43 @@ document.addEventListener('keydown', e => {
     const allBtn = document.querySelector('.filter-btn[data-year="all"]');
     if (allBtn) allBtn.classList.add('active');
   }
+})();
+/* ---------- DARK MODE TOGGLE FUNCTIONALITY ---------- */
+/* Add this script at the end of your existing JavaScript section, or in a separate file. */
+
+(function() {
+  const toggleBtn = document.getElementById('darkModeToggle');
+  if (!toggleBtn) return;
+
+  const htmlElement = document.documentElement;
+  const iconSpan = toggleBtn.querySelector('.toggle-icon');
+  const textSpan = toggleBtn.querySelector('.toggle-text');
+
+  // Check for saved user preference
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    htmlElement.classList.add('dark');
+    iconSpan.textContent = '☀️';
+    textSpan.textContent = 'Light';
+  } else {
+    htmlElement.classList.remove('dark');
+    iconSpan.textContent = '🌙';
+    textSpan.textContent = 'Dark';
+  }
+
+  // Toggle on button click
+  toggleBtn.addEventListener('click', () => {
+    const isDark = htmlElement.classList.toggle('dark');
+    if (isDark) {
+      iconSpan.textContent = '☀️';
+      textSpan.textContent = 'Light';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      iconSpan.textContent = '🌙';
+      textSpan.textContent = 'Dark';
+      localStorage.setItem('theme', 'light');
+    }
+  });
 })();
 </script>
 </body>
