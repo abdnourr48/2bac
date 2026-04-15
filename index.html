@@ -46,6 +46,42 @@
   --muted: #94a3b8;
 }
 
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 16px;
+  background-color: var(--card);
+}
+.dark-mode-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+.dark-mode-toggle .toggle-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.dark .dark-mode-toggle {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+.dark .dark-mode-toggle:hover {
+  background: var(--accent);
+  color: white;
+}
+
+
 /* Base overrides */
 .dark body { background: var(--bg); color: var(--text); }
 .dark .card { background: var(--card); border-color: var(--border); }
