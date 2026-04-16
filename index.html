@@ -2717,6 +2717,7 @@
 </main>
 
 <script>
+  
 // ===================== NAVIGATION =====================
 let totalAnswered = 0;
 let totalQuestions = 60;
@@ -3015,4 +3016,58 @@ document.addEventListener('keydown', e => {
 })();
 </script>
 </body>
+<script>
+// ===================== MOBILE MENU TOGGLE =====================
+(function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  // التحقق من وجود العناصر
+  if (!menuToggle || !sidebar || !overlay) {
+    console.error('خطأ: لم يتم العثور على عناصر القائمة الجانبية.');
+    return;
+  }
+
+  // دالة لإغلاق القائمة الجانبية
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+
+  // دالة لفتح القائمة الجانبية
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+
+  // حدث النقر على زر الهامبرغر
+  menuToggle.addEventListener('click', function(e) {
+    e.stopPropagation(); // منع انتشار الحدث
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  // حدث النقر على الطبقة الشفافة (overlay)
+  overlay.addEventListener('click', closeSidebar);
+
+  // إغلاق القائمة عند النقر على أي رابط بداخلها (اختياري لكنه يحسن التجربة)
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeSidebar);
+  });
+
+  // إغلاق القائمة إذا تجاوز عرض الشاشة 768px (للتأكد من إخفاء overlay عند العودة لوضع الحاسوب)
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+      closeSidebar();
+    }
+  });
+
+  // منع ظهور القائمة مفتوحة بشكل خاطئ عند تحميل الصفحة
+  closeSidebar();
+})();
+</script>
 </html>
