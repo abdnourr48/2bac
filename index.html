@@ -1139,7 +1139,40 @@
     font-size: 1.8rem;
   }
 }
- 
+ /* ضمان تغطية النصوص في قسم الامتحانات الوطنية */
+.dark #national-exams .section-title {
+  color: var(--text) !important;
+}
+.dark #national-exams .section-subtitle {
+  color: var(--muted) !important;
+}
+
+/* إصلاح الفوتر في الوضع الداكن */
+.dark .site-footer {
+  background: var(--card);
+  border-top-color: var(--border);
+}
+.dark .footer-text {
+  color: var(--text);
+}
+
+/* إصلاح أي نص أبيض متبقي داخل الكروت */
+.dark .card,
+.dark .passage,
+.dark .exams-section-inner {
+  color: var(--text);
+}
+
+/* ضمان ظهور الأزرار بشكل صحيح */
+.dark .filter-btn {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--border);
+}
+.dark .filter-btn.active {
+  background: var(--accent);
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -2712,9 +2745,8 @@
 <section class="section" id="national-exams">
 <div class="exams-section-inner" style="padding: 4rem 0;">
       <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
-      <h2 class="section-title" style="color: #ffffff;">📄 National Exams – 2BAC English (مسلك علمي)</h2>
-      <p class="section-subtitle" style="color: #a1a1aa;">Official past papers – الدورة-العادية & الدورة-الاستدراكية (2011–2023)</p>
-
+<h2 class="section-title">📄 National Exams – 2BAC English (مسلك علمي)</h2>
+<p class="section-subtitle">Official past papers – الدورة-العادية & الدورة-الاستدراكية (2011–2023)</p>
     <!-- Year Filter -->
  <div class="exam-filter">
       <button class="filter-btn active" data-year="all">All Years</button>
