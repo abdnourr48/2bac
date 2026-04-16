@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2BAC English Master — Morocco's English Learning Platform</title>
@@ -29,6 +31,37 @@
     color: var(--text);
     line-height: 1.7;
   }
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+.back-to-top:hover {
+  background: #2563eb;
+  transform: translateY(-3px);
+}
+
 /* ---------- FULLY FIXED DARK MODE STYLES ---------- */
 /* Paste this entire block at the end of your existing <style> section, */
 /* replacing any duplicate or conflicting dark mode rules.             */
@@ -229,7 +262,7 @@
 }
 
 .telegram {
-  background: #0088cc;
+  background: #26A5E4;
 }
 
 .whatsapp {
@@ -702,13 +735,18 @@
     #sidebar { transform: translateX(-100%); }
     #sidebar.open { transform: translateX(0); }
     #main { margin-left: 0; }
-    .menu-toggle { display: flex; }
-    .overlay.show { display: block; }
+  .menu-toggle {
+    left: 12px;
+  }    .overlay.show { display: block; }
     .section { padding: 20px 16px; }
     .hero { padding: 32px 24px; }
     .hero h2 { font-size: 1.6rem; }
-    .topbar { padding: 12px 16px 12px 72px; }
+     .topbar {
+    padding: 12px 16px; }
+      .progress-global {
+    display: none;  }
   }
+
 
   /* DIVIDER */
   .divider { height: 1px; background: var(--border); margin: 24px 0; }
@@ -953,6 +991,9 @@
 </style>
 </head>
 <body>
+
+  <!-- Back to Top Button -->
+<button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="breadcrumb">2BAC English Master / <span id="currentSection">Dashboard</span></div>
@@ -966,7 +1007,7 @@
   </button> 
 </div>
 <!-- MOBILE MENU TOGGLE -->
-<button class="menu-toggle" id="menuToggle">☰</button>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
 <div class="overlay" id="overlay"></div>
 
 <!-- SIDEBAR -->
@@ -977,6 +1018,7 @@
   </div>
   <nav>
     <div class="nav-section">OVERVIEW</div>
+    
     <a onclick="showSection('home')" class="active" id="nav-home"><span class="icon">🏠</span> Dashboard</a>
     <a onclick="showSection('tips')" id="nav-tips"><span class="icon">💡</span> Study Tips</a>
 
@@ -1011,7 +1053,7 @@
   <!-- ====== HOME ====== -->
   <div class="section active" id="home">
     <div class="hero">
-      <h2>Master English for<br>Moroccan BAC 2025</h2>
+<h2>Master English for<br>Moroccan BAC 2026</h2>
       <p>Interactive lessons, practice exams, vocabulary builders, and writing guides — all designed specifically for 2BAC students targeting A2→B1→B2.</p>
       <div class="badge-row">
         <span class="badge">🎓 10 Complete Units</span>
@@ -1027,7 +1069,7 @@
       <div class="stat-card"><div class="stat-number">60+</div><div class="stat-label">Interactive Questions</div></div>
       <div class="stat-card"><div class="stat-number">200+</div><div class="stat-label">BAC Vocabulary Words</div></div>
       <div class="stat-card"><div class="stat-number">B1→B2</div><div class="stat-label">Target Level</div></div>
-      <div class="stat-card"><div class="stat-number" id="answeredCount">0</div><div class="stat-label">Your Answers Today</div></div>
+      <div class="stat-card"><div class="stat-number" id="answeredCount">23</div><div class="stat-label">National Exams</div></div>
     </div>
 
     <h2 class="section-title">Browse Units</h2>
@@ -2664,8 +2706,8 @@
  <div class="community-box">
       <p>hna f telegram o whatsapp tal9a ga3 doros o tamarin li twajd bihom rasek l bac</p>
       <div class="community-buttons">
-        <a href="https://t.me/bac_rox" target="_blank" class="btn telegram">Telegram</a>
-        <a href="https://chat.whatsapp.com/KNUdAKIh0QDLDrvWzrWrPy" target="_blank" class="btn whatsapp">WhatsApp</a>
+       <a href="https://t.me/bac_rox" target="_blank" rel="noopener noreferrer" class="btn telegram">Telegram</a>
+<a href="https://chat.whatsapp.com/KNUdAKIh0QDLDrvWzrWrPy" target="_blank" rel="noopener noreferrer" class="btn whatsapp">WhatsApp</a>
       </div>
     </div>
   </div>
@@ -2952,6 +2994,23 @@ document.addEventListener('keydown', e => {
       textSpan.textContent = 'Dark';
       localStorage.setItem('theme', 'light');
     }
+  });
+})();
+// Back to Top Button
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  });
+  
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
 </script>
