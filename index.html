@@ -279,8 +279,8 @@
   top: 0;
   left: 0;
   width: 280px; /* أوسع قليلاً للمس */
-  height: 100vh;
-  height: 100dvh; /* يدعم شاشات الجوال الحديثة */
+  height: 100vh; /* خيار احتياطي */
+  height: 100dvh; /* للمتصفحات الحديثة */
   background: var(--primary);
   overflow-y: auto;
   z-index: 1000;
@@ -332,8 +332,16 @@
   #sidebar nav a .icon { font-size: 1rem; width: 20px; text-align: center; }
 
   /* MAIN */
-  #main { margin-left: 260px; min-height: 100vh; }
-
+ #main { 
+  margin-left: 260px; 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+/* نجعل المحتوى يأخذ المساحة المتاحة */
+#main > :not(.site-footer) {
+  flex: 1;
+}
   /* TOP BAR */
   .topbar {
     position: sticky; top: 0; z-index: 100;
@@ -737,13 +745,76 @@
   backdrop-filter: blur(4px);
   z-index: 999;
 }
+/* فوتر أنيق للمجتمع */
+.site-footer {
+  margin-top: 60px;
+  padding: 24px 32px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+}
 
+.footer-text {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.footer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 40px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.footer-btn.telegram {
+  background: #26A5E4;
+}
+
+.footer-btn.whatsapp {
+  background: #25D366;
+}
+
+.footer-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  opacity: 0.9;
+}
 @media (max-width: 768px) {
   #sidebar {
     transform: translateX(-100%);
   }
   #sidebar.open {
     transform: translateX(0);
+  }
+  .site-footer {
+    margin-top: 40px;
+    padding: 20px 16px;
+    border-radius: 16px 16px 0 0;
+  }
+  .footer-text {
+    font-size: 0.9rem;
+  }
+  .footer-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
   }
   .menu-toggle {
     display: flex;
@@ -767,37 +838,29 @@
   #main {
     margin-left: 0 !important;
   }
-
   .topbar {
-    padding: 12px 16px 12px 72px !important; /* مساحة لزر القائمة */
+    padding: 12px 16px 12px 72px !important;
   }
-
   .section {
     padding: 16px 12px !important;
   }
-
   .hero {
     padding: 32px 20px !important;
   }
-
   .hero h2 {
     font-size: 1.8rem !important;
   }
-
   .stats-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
   }
-
   .units-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
-
   .card {
     padding: 20px 16px !important;
   }
-
   .exams-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
@@ -808,17 +871,14 @@
     min-height: 48px;
     padding: 10px 16px;
   }
-
   .tab-btn {
     padding: 10px 16px;
     font-size: 0.9rem;
   }
-
   .exam-filter {
     gap: 8px;
     flex-wrap: wrap;
   }
-
   .filter-btn {
     padding: 8px 14px;
     font-size: 0.85rem;
@@ -828,13 +888,10 @@
   body {
     overflow-x: hidden;
   }
-
-  /* تحسين عرض الصور والنصوص */
   img, svg, video {
     max-width: 100%;
     height: auto;
   }
-
   .passage {
     font-size: 0.9rem;
     line-height: 1.8;
@@ -2798,17 +2855,23 @@
       </div>
     </div>
   </div>
- <div class="community-box">
-      <p>hna f telegram o whatsapp tal9a ga3 doros o tamarin li twajd bihom rasek l bac</p>
-      <div class="community-buttons">
-       <a href="https://t.me/bac_rox" target="_blank" rel="noopener noreferrer" class="btn telegram">Telegram</a>
-<a href="https://chat.whatsapp.com/KNUdAKIh0QDLDrvWzrWrPy" target="_blank" rel="noopener noreferrer" class="btn whatsapp">WhatsApp</a>
-      </div>
-    </div>
-  </div>
+ 
 </section>
 <!-- ========== END NATIONAL EXAMS SECTION ========== -->
-  
+    <!-- فوتر المجتمع -->
+  <footer class="site-footer">
+    <div class="footer-text">
+      📚 hna f telegram o whatsapp tal9a ga3 doros o tamarin li twajd bihom rasek l bac
+    </div>
+    <div class="footer-buttons">
+      <a href="https://t.me/bac_rox" target="_blank" rel="noopener noreferrer" class="footer-btn telegram">
+        <span>📱</span> Telegram
+      </a>
+      <a href="https://chat.whatsapp.com/KNUdAKIh0QDLDrvWzrWrPy" target="_blank" rel="noopener noreferrer" class="footer-btn whatsapp">
+        <span>💬</span> WhatsApp
+      </a>
+    </div>
+  </footer>
 </main>
 
 <script>
