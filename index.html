@@ -33,10 +33,10 @@
   }
 .back-to-top {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
+  bottom: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--accent);
   color: white;
@@ -275,15 +275,20 @@
 
   /* SIDEBAR */
   #sidebar {
-    position: fixed; top: 0; left: 0;
-    width: 260px; height: 100vh;
-    background: var(--primary);
-    overflow-y: auto;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-    display: flex; flex-direction: column;
-  }
-
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px; /* أوسع قليلاً للمس */
+  height: 100vh;
+  height: 100dvh; /* يدعم شاشات الجوال الحديثة */
+  background: var(--primary);
+  overflow-y: auto;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+}
   #sidebar .logo {
     padding: 24px 20px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -311,8 +316,8 @@
 
   #sidebar nav a {
     display: flex; align-items: center; gap: 10px;
-    padding: 10px 20px;
-    color: #cbd5e1;
+  padding: 14px 20px;
+      color: #cbd5e1;
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
@@ -347,11 +352,9 @@
     font-size: 0.8rem; color: var(--muted);
   }
 
-  .progress-bar-wrap {
-    width: 160px; height: 8px;
-    background: var(--border);
-    border-radius: 999px; overflow: hidden;
-  }
+.progress-bar-wrap {
+  width: 120px; /* أصغر قليلاً للجوال */
+}
 
   .progress-bar-fill {
     height: 100%;
@@ -724,12 +727,16 @@
     align-items: center; justify-content: center;
   }
 
-  .overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 999;
-  }
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
 
 @media (max-width: 768px) {
   #sidebar {
@@ -739,10 +746,99 @@
     transform: translateX(0);
   }
   .menu-toggle {
-    display: flex; /* يظهر الزر */
+    display: flex;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 2001;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
   .overlay.show {
     display: block;
+  }
+
+  /* تحسينات عامة للجوال */
+  #main {
+    margin-left: 0 !important;
+  }
+
+  .topbar {
+    padding: 12px 16px 12px 72px !important; /* مساحة لزر القائمة */
+  }
+
+  .section {
+    padding: 16px 12px !important;
+  }
+
+  .hero {
+    padding: 32px 20px !important;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .units-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .card {
+    padding: 20px 16px !important;
+  }
+
+  .exams-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  /* جعل الأزرار أكبر للمس */
+  button, .option-btn, .tf-btn, .exam-option, .accordion-header, .filter-btn {
+    min-height: 48px;
+    padding: 10px 16px;
+  }
+
+  .tab-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .exam-filter {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+
+  /* منع التمرير الأفقي */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* تحسين عرض الصور والنصوص */
+  img, svg, video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .passage {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    padding: 16px;
   }
 }
 
@@ -999,14 +1095,14 @@
   <div class="progress-global">
  
   </div>
-  <!-- DARK MODE TOGGLE -->
+  <!-- DARK MODE TOGGLE -->  
   <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
     <span class="toggle-icon">🌙</span>
     <span class="toggle-text">Dark</span>
   </button> 
 </div>
 <!-- MOBILE MENU TOGGLE -->
-<button class="menu-toggle" id="menuToggle">☰</button>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
 <div class="overlay" id="overlay"></div>
 
 <!-- SIDEBAR -->
@@ -3041,6 +3137,27 @@ document.addEventListener('keydown', e => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+// قفل تمرير الصفحة عند فتح القائمة (يحسن تجربة الجوال)
+function lockBodyScroll(lock) {
+  document.body.style.overflow = lock ? 'hidden' : '';
+}
+
+// عدّل دوال openSidebar و closeSidebar الموجودة
+function openSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+  lockBodyScroll(true);
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+  lockBodyScroll(false);
+}
 </script>
 </body>
  
