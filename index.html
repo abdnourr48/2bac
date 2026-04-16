@@ -731,21 +731,20 @@
     z-index: 999;
   }
 
-  @media (max-width: 768px) {
-    #sidebar { transform: translateX(-100%); }
-    #sidebar.open { transform: translateX(0); }
-    #main { margin-left: 0; }
-  .menu-toggle {
-    left: 12px;
-  }    .overlay.show { display: block; }
-    .section { padding: 20px 16px; }
-    .hero { padding: 32px 24px; }
-    .hero h2 { font-size: 1.6rem; }
-     .topbar {
-    padding: 12px 16px; }
-      .progress-global {
-    display: none;  }
+@media (max-width: 768px) {
+  #sidebar {
+    transform: translateX(-100%);
   }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  .menu-toggle {
+    display: flex; /* يظهر الزر */
+  }
+  .overlay.show {
+    display: block;
+  }
+}
 
 
   /* DIVIDER */
@@ -1007,7 +1006,7 @@
   </button> 
 </div>
 <!-- MOBILE MENU TOGGLE -->
-<button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+<button class="menu-toggle" id="menuToggle">☰</button>
 <div class="overlay" id="overlay"></div>
 
 <!-- SIDEBAR -->
@@ -2745,19 +2744,47 @@ const names = {
   closeSidebar();
 }
 
-// MOBILE
-document.getElementById('menuToggle').addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show');
-});
+// ===================== MOBILE MENU (IMPROVED) =====================
+(function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
 
-document.getElementById('overlay').addEventListener('click', closeSidebar);
+  if (!menuToggle || !sidebar || !overlay) return;
 
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
-}
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
 
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // إغلاق القائمة عند النقر على أي رابط بداخلها
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeSidebar);
+  });
+
+  // إغلاق القائمة تلقائياً عند العودة لحجم شاشة كبير
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      closeSidebar();
+    }
+  });
+})();
 // ===================== TABS =====================
 function switchTab(unit, tab, btn) {
   document.querySelectorAll(`[id^="${unit}-"]`).forEach(el => el.classList.remove('active'));
@@ -3016,58 +3043,5 @@ document.addEventListener('keydown', e => {
 })();
 </script>
 </body>
-<script>
-// ===================== MOBILE MENU TOGGLE =====================
-(function() {
-  const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-
-  // التحقق من وجود العناصر
-  if (!menuToggle || !sidebar || !overlay) {
-    console.error('خطأ: لم يتم العثور على عناصر القائمة الجانبية.');
-    return;
-  }
-
-  // دالة لإغلاق القائمة الجانبية
-  function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('show');
-  }
-
-  // دالة لفتح القائمة الجانبية
-  function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('show');
-  }
-
-  // حدث النقر على زر الهامبرغر
-  menuToggle.addEventListener('click', function(e) {
-    e.stopPropagation(); // منع انتشار الحدث
-    if (sidebar.classList.contains('open')) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
-  });
-
-  // حدث النقر على الطبقة الشفافة (overlay)
-  overlay.addEventListener('click', closeSidebar);
-
-  // إغلاق القائمة عند النقر على أي رابط بداخلها (اختياري لكنه يحسن التجربة)
-  sidebar.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeSidebar);
-  });
-
-  // إغلاق القائمة إذا تجاوز عرض الشاشة 768px (للتأكد من إخفاء overlay عند العودة لوضع الحاسوب)
-  window.addEventListener('resize', function() {
-    if (window.innerWidth > 768) {
-      closeSidebar();
-    }
-  });
-
-  // منع ظهور القائمة مفتوحة بشكل خاطئ عند تحميل الصفحة
-  closeSidebar();
-})();
-</script>
+ 
 </html>
