@@ -199,10 +199,10 @@
 .dark #sidebar { background: #0f172a; }
 .dark #sidebar .logo h1 { color: white; }
 .dark #sidebar .logo p { color: #93c5fd; }
-.dark #sidebar nav .nav-section { color: #60a5fa; }
-.dark #sidebar nav a { color: #cbd5e1; }
-.dark #sidebar nav a:hover { background: rgba(255,255,255,0.1); color: white; }
-.dark #sidebar nav a.active { background: rgba(59,130,246,0.25); color: #60a5fa; }
+.dark #sidebar .nav-links .nav-section { color: #60a5fa; }
+.dark #sidebar .nav-links a { color: #cbd5e1; }
+.dark #sidebar .nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
+.dark #sidebar .nav-links a.active { background: rgba(59,130,246,0.25); color: #60a5fa; }
 
 /* Misc */
 .dark .divider { background: var(--border); }
@@ -273,22 +273,16 @@
   opacity: 0.8;
 }
 
-  /* SIDEBAR */
-  #sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 280px; /* أوسع قليلاً للمس */
-  height: 100vh; /* خيار احتياطي */
-  height: 100dvh; /* للمتصفحات الحديثة */
-  background: var(--primary);
+/* SIDEBAR - Overlay على كل الشاشات */
+#sidebar {
+  position: fixed; top: 0; left: 0; width: 300px; height: 100vh;
+  background: var(--primary); z-index: 1100;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
   overflow-y: auto;
-  z-index: 1000;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+  box-shadow: 4px 0 32px rgba(0,0,0,0.22);
 }
+#sidebar.open { transform: translateX(0); }
   #sidebar .logo {
     padding: 24px 20px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -303,9 +297,9 @@
 
   #sidebar .logo p { color: #93c5fd; font-size: 0.75rem; margin-top: 4px; }
 
-  #sidebar nav { flex: 1; padding: 16px 0; }
+  #sidebar .nav-links { flex: 1; padding: 16px 0; }
 
-  #sidebar nav .nav-section {
+  #sidebar .nav-links .nav-section {
     padding: 8px 20px 4px;
     color: #93c5fd;
     font-size: 0.7rem;
@@ -314,10 +308,10 @@
     text-transform: uppercase;
   }
 
-  #sidebar nav a {
+  #sidebar .nav-links a {
     display: flex; align-items: center; gap: 10px;
-  padding: 14px 20px;
-      color: #cbd5e1;
+    padding: 14px 20px;
+    color: #cbd5e1;
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
@@ -326,18 +320,13 @@
     cursor: pointer;
   }
 
-  #sidebar nav a:hover { background: rgba(255,255,255,0.07); color: #fff; }
-  #sidebar nav a.active { background: rgba(59,130,246,0.2); color: #60a5fa; border-left-color: #3b82f6; }
+  #sidebar .nav-links a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  #sidebar .nav-links a.active { background: rgba(59,130,246,0.2); color: #60a5fa; border-left-color: #3b82f6; }
+  #sidebar .nav-links a .icon { font-size: 1rem; width: 20px; text-align: center; }
 
-  #sidebar nav a .icon { font-size: 1rem; width: 20px; text-align: center; }
+  /* MAIN - يأخذ كامل العرض دائماً */
+#main { margin-left: 0; }
 
-  /* MAIN */
- #main { 
-  margin-left: 260px; 
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
 /* نجعل المحتوى يأخذ المساحة المتاحة */
 #main > :not(.site-footer) {
   flex: 1;
@@ -797,107 +786,74 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   opacity: 0.9;
 }
-@media (max-width: 768px) {
-  #sidebar {
-    transform: translateX(-100%);
-  }
-  #sidebar.open {
-    transform: translateX(0);
-  }
-  .site-footer {
-    margin-top: 40px;
-    padding: 20px 16px;
-    border-radius: 16px 16px 0 0;
-  }
-  .footer-text {
-    font-size: 0.9rem;
-  }
-  .footer-btn {
-    padding: 10px 18px;
-    font-size: 0.9rem;
-  }
-  .menu-toggle {
-    display: flex;
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 2001;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--primary);
-    color: white;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-  .overlay.show {
-    display: block;
-  }
-
-  /* تحسينات عامة للجوال */
-  #main {
-    margin-left: 0 !important;
-  }
-  .topbar {
-    padding: 12px 16px 12px 72px !important;
-  }
-  .section {
-    padding: 16px 12px !important;
-  }
-  .hero {
-    padding: 32px 20px !important;
-  }
-  .hero h2 {
-    font-size: 1.8rem !important;
-  }
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-  .units-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-  .card {
-    padding: 20px 16px !important;
-  }
-  .exams-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-
-  /* جعل الأزرار أكبر للمس */
-  button, .option-btn, .tf-btn, .exam-option, .accordion-header, .filter-btn {
-    min-height: 48px;
-    padding: 10px 16px;
-  }
-  .tab-btn {
-    padding: 10px 16px;
-    font-size: 0.9rem;
-  }
-  .exam-filter {
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .filter-btn {
-    padding: 8px 14px;
-    font-size: 0.85rem;
-  }
-
-  /* منع التمرير الأفقي */
-  body {
-    overflow-x: hidden;
-  }
-  img, svg, video {
-    max-width: 100%;
-    height: auto;
-  }
-  .passage {
-    font-size: 0.9rem;
-    line-height: 1.8;
-    padding: 16px;
-  }
+/* ===== MENU TOGGLE BUTTON - موحد لكل الشاشات ===== */
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 14px;
+  left: 16px;
+  z-index: 2001;
+  background: var(--primary);
+  color: white;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(30,58,95,0.35);
+  transition: background 0.2s, transform 0.2s;
 }
+.menu-toggle:hover { background: var(--accent); transform: scale(1.05); }
+
+/* Overlay - يظهر على كل الشاشات عند فتح القائمة */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  transition: opacity 0.3s;
+}
+.overlay.show { display: block; }
+
+/* إخفاء زر Desktop القديم */
+.sidebar-toggle-btn { display: none !important; }
+
+/* ضبط الـ topbar ليكون بعيد عن زر الهامبرغر */
+.topbar {
+  padding: 14px 32px 14px 76px !important;
+}
+
+/* إزالة أي collapsed/expanded قديمة */
+#sidebar.collapsed { transform: translateX(-100%) !important; width: 300px !important; }
+#main.expanded { margin-left: 0 !important; }
+
+/* إضافة زر إغلاق داخل القائمة */
+#sidebar-close {
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+#sidebar-close:hover { background: rgba(255,255,255,0.2); }
+
+/* Logo مع مساحة للزر */
+#sidebar .logo { padding: 22px 20px 22px 20px; padding-right: 56px; }
 
 
   /* DIVIDER */
@@ -1173,6 +1129,8 @@
   background: var(--accent);
   color: white;
 }
+
+/* sidebar-toggle-btn مُزال نهائياً */
 </style>
 </head>
 <body>
@@ -1182,14 +1140,15 @@
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="breadcrumb">2BAC English Master / <span id="currentSection">Dashboard</span></div>
-  <div class="progress-global">
+  <div style="flex: 1;"></div>
+  
  
-  </div>
-  <!-- DARK MODE TOGGLE -->  
+  
+  <!-- زر الوضع الداكن -->
   <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
     <span class="toggle-icon">🌙</span>
     <span class="toggle-text">Dark</span>
-  </button> 
+  </button>
 </div>
 <!-- MOBILE MENU TOGGLE -->
 <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
@@ -1197,38 +1156,38 @@
 
 <!-- SIDEBAR -->
 <nav id="sidebar">
+  <button id="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   <div class="logo">
     <h1>📚 2BAC English</h1>
     <p>Morocco's Premier Learning Platform</p>
   </div>
-  <nav>
+  <div class="nav-links">
     <div class="nav-section">OVERVIEW</div>
-    
-    <a onclick="showSection('home')" class="active" id="nav-home"><span class="icon">🏠</span> Dashboard</a>
-    <a onclick="showSection('tips')" id="nav-tips"><span class="icon">💡</span> Study Tips</a>
+    <a onclick="showSection('home')" class="active" id="nav-home"><span class="icon">🏠</span> <span class="link-text">Dashboard</span></a>
+    <a onclick="showSection('tips')" id="nav-tips"><span class="icon">💡</span> <span class="link-text">Study Tips</span></a>
 
     <div class="nav-section">UNITS</div>
-    <a onclick="showSection('units')" id="nav-units"><span class="icon">📖</span> All Units</a>
-    <a onclick="showSection('unit1')" id="nav-unit1"><span class="icon">1️⃣</span> Unit 1 — Technology</a>
-    <a onclick="showSection('unit2')" id="nav-unit2"><span class="icon">2️⃣</span> Unit 2 — Environment</a>
-    <a onclick="showSection('unit3')" id="nav-unit3"><span class="icon">3️⃣</span> Unit 3 — Globalization</a>
-    <a onclick="showSection('unit4')" id="nav-unit4"><span class="icon">4️⃣</span> Unit 4 — Youth & Society</a>
-    <a onclick="showSection('unit5')" id="nav-unit5"><span class="icon">5️⃣</span> Unit 5 — Education</a>
-    <a onclick="showSection('unit6')" id="nav-unit6"><span class="icon">6️⃣</span> Unit 6 — Health</a>
-    <a onclick="showSection('unit7')" id="nav-unit7"><span class="icon">7️⃣</span> Unit 7 — Media</a>
-    <a onclick="showSection('unit8')" id="nav-unit8"><span class="icon">8️⃣</span> Unit 8 — Human Rights</a>
-    <a onclick="showSection('unit9')" id="nav-unit9"><span class="icon">9️⃣</span> Unit 9 — Science</a>
-    <a onclick="showSection('unit10')" id="nav-unit10"><span class="icon">🔟</span> Unit 10 — Cultural Identity</a>
+    <a onclick="showSection('units')" id="nav-units"><span class="icon">📖</span> <span class="link-text">All Units</span></a>
+    <a onclick="showSection('unit1')" id="nav-unit1"><span class="icon">1️⃣</span> <span class="link-text">Unit 1 — Technology</span></a>
+    <a onclick="showSection('unit2')" id="nav-unit2"><span class="icon">2️⃣</span> <span class="link-text">Unit 2 — Environment</span></a>
+    <a onclick="showSection('unit3')" id="nav-unit3"><span class="icon">3️⃣</span> <span class="link-text">Unit 3 — Globalization</span></a>
+    <a onclick="showSection('unit4')" id="nav-unit4"><span class="icon">4️⃣</span> <span class="link-text">Unit 4 — Youth & Society</span></a>
+    <a onclick="showSection('unit5')" id="nav-unit5"><span class="icon">5️⃣</span> <span class="link-text">Unit 5 — Education</span></a>
+    <a onclick="showSection('unit6')" id="nav-unit6"><span class="icon">6️⃣</span> <span class="link-text">Unit 6 — Health</span></a>
+    <a onclick="showSection('unit7')" id="nav-unit7"><span class="icon">7️⃣</span> <span class="link-text">Unit 7 — Media</span></a>
+    <a onclick="showSection('unit8')" id="nav-unit8"><span class="icon">8️⃣</span> <span class="link-text">Unit 8 — Human Rights</span></a>
+    <a onclick="showSection('unit9')" id="nav-unit9"><span class="icon">9️⃣</span> <span class="link-text">Unit 9 — Science</span></a>
+    <a onclick="showSection('unit10')" id="nav-unit10"><span class="icon">🔟</span> <span class="link-text">Unit 10 — Cultural Identity</span></a>
 
     <div class="nav-section">WRITING</div>
-    <a onclick="showSection('writing')" id="nav-writing"><span class="icon">✍️</span> Writing Skills</a>
+    <a onclick="showSection('writing')" id="nav-writing"><span class="icon">✍️</span> <span class="link-text">Writing Skills</span></a>
 
-<div class="nav-section">EXAMS</div>
-<a onclick="showSection('exam1')" id="nav-exam1"><span class="icon">📝</span> Practice Exam 1</a>
-<a onclick="showSection('exam2')" id="nav-exam2"><span class="icon">📝</span> Practice Exam 2</a>
-<a onclick="showSection('exam3')" id="nav-exam3"><span class="icon">📝</span> Practice Exam 3</a>
-<a onclick="showSection('national-exams')" id="nav-national-exams"><span class="icon">📄</span> National Exams</a>
-  </nav>
+    <div class="nav-section">EXAMS</div>
+    <a onclick="showSection('exam1')" id="nav-exam1"><span class="icon">📝</span> <span class="link-text">Practice Exam 1</span></a>
+    <a onclick="showSection('exam2')" id="nav-exam2"><span class="icon">📝</span> <span class="link-text">Practice Exam 2</span></a>
+    <a onclick="showSection('exam3')" id="nav-exam3"><span class="icon">📝</span> <span class="link-text">Practice Exam 3</span></a>
+    <a onclick="showSection('national-exams')" id="nav-national-exams"><span class="icon">📄</span> <span class="link-text">National Exams</span></a>
+  </div>
 </nav>
 
 <!-- MAIN -->
@@ -2932,75 +2891,89 @@
 </main>
 
 <script>
-  
-// ===================== NAVIGATION =====================
+// ===================== GLOBAL VARIABLES =====================
 let totalAnswered = 0;
 let totalQuestions = 60;
 
+// ===================== HELPER: LOCK BODY SCROLL =====================
+function lockBodyScroll(lock) {
+  document.body.style.overflow = lock ? 'hidden' : '';
+}
+
+// ===================== SIDEBAR FUNCTIONS (MUST BE DEFINED EARLY) =====================
+function openSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  if (sidebar) sidebar.classList.add('open');
+  if (overlay) overlay.classList.add('show');
+  lockBodyScroll(true);
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
+  lockBodyScroll(false);
+}
+
+// ===================== NAVIGATION =====================
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('#sidebar nav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('#sidebar .nav-links a').forEach(a => a.classList.remove('active'));
   const section = document.getElementById(id);
   if (section) section.classList.add('active');
   const navEl = document.getElementById('nav-' + id);
   if (navEl) navEl.classList.add('active');
-const names = {
-  home:'Dashboard', tips:'Study Tips', units:'All Units',
-  unit1:'Unit 1 — Technology', unit2:'Unit 2 — Environment',
-  unit3:'Unit 3 — Globalization', unit4:'Unit 4 — Youth & Society',
-  unit5:'Unit 5 — Education', unit6:'Unit 6 — Health',
-  unit7:'Unit 7 — Media', unit8:'Unit 8 — Human Rights',
-  unit9:'Unit 9 — Science', unit10:'Unit 10 — Cultural Identity',
-  writing:'Writing Skills', exam1:'Practice Exam 1',
-  exam2:'Practice Exam 2', exam3:'Practice Exam 3',
-  'national-exams':'National Exams' // <-- أضف هذا السطر
-};
+  const names = {
+    home:'Dashboard', tips:'Study Tips', units:'All Units',
+    unit1:'Unit 1 — Technology', unit2:'Unit 2 — Environment',
+    unit3:'Unit 3 — Globalization', unit4:'Unit 4 — Youth & Society',
+    unit5:'Unit 5 — Education', unit6:'Unit 6 — Health',
+    unit7:'Unit 7 — Media', unit8:'Unit 8 — Human Rights',
+    unit9:'Unit 9 — Science', unit10:'Unit 10 — Cultural Identity',
+    writing:'Writing Skills', exam1:'Practice Exam 1',
+    exam2:'Practice Exam 2', exam3:'Practice Exam 3',
+    'national-exams':'National Exams'
+  };
   document.getElementById('currentSection').textContent = names[id] || id;
   window.scrollTo({ top: 0, behavior: 'smooth' });
   closeSidebar();
 }
 
-// ===================== MOBILE MENU (IMPROVED) =====================
+// ===================== MENU TOGGLE - موحد لكل الشاشات =====================
 (function() {
   const menuToggle = document.getElementById('menuToggle');
-  const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
 
-  if (!menuToggle || !sidebar || !overlay) return;
-
-  function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('show');
+  if (menuToggle) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
   }
 
-  function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('show');
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
   }
 
-  menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (sidebar.classList.contains('open')) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
-  });
-
-  overlay.addEventListener('click', closeSidebar);
-
-  // إغلاق القائمة عند النقر على أي رابط بداخلها
-  sidebar.querySelectorAll('a').forEach(link => {
+  document.querySelectorAll('#sidebar .nav-links a').forEach(link => {
     link.addEventListener('click', closeSidebar);
   });
-
-  // إغلاق القائمة تلقائياً عند العودة لحجم شاشة كبير
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      closeSidebar();
-    }
-  });
 })();
+
+// ===================== DESKTOP SIDEBAR TOGGLE =====================
+// مُوحَّد مع الجوال — لا يوجد collapsed/expanded بعد الآن
+(function() {
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  if (sidebarToggle) sidebarToggle.style.display = 'none'; // أخفِ الزر القديم
+})();
+
 // ===================== TABS =====================
 function switchTab(unit, tab, btn) {
   document.querySelectorAll(`[id^="${unit}-"]`).forEach(el => el.classList.remove('active'));
@@ -3072,15 +3045,8 @@ function revealAllVocab(gridId) {
 }
 
 // ===================== ANSWERS =====================
-function revealAnswers(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.add('show');
-}
-
-function hideAnswers(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.remove('show');
-}
+function revealAnswers(id) { document.getElementById(id)?.classList.add('show'); }
+function hideAnswers(id) { document.getElementById(id)?.classList.remove('show'); }
 
 // ===================== MODEL ANSWERS =====================
 function toggleModelAnswer(id) {
@@ -3103,8 +3069,6 @@ function toggleAccordion(item) {
 function submitExam(examId, answers) {
   const questions = Object.keys(answers);
   let score = 0;
-  let attempted = 0;
-
   questions.forEach(name => {
     const selected = document.querySelector(`input[name="${name}"]:checked`);
     const options = document.querySelectorAll(`input[name="${name}"]`);
@@ -3113,21 +3077,15 @@ function submitExam(examId, answers) {
       if (opt.value === answers[name]) label.classList.add('correct-ans');
     });
     if (selected) {
-      attempted++;
       const label = selected.closest('.exam-option');
-      if (selected.value === answers[name]) {
-        score++;
-      } else {
-        label.classList.add('wrong-ans');
-      }
+      if (selected.value === answers[name]) score++;
+      else label.classList.add('wrong-ans');
       selected.disabled = true;
     }
   });
-
   const scoreEl = document.getElementById(examId + '-score');
   const numEl = document.getElementById(examId + '-num');
   const msgEl = document.getElementById(examId + '-msg');
-
   numEl.textContent = score + '/10';
   let msg = '';
   if (score === 10) msg = '🏆 Perfect score! Outstanding work! You are BAC-ready!';
@@ -3135,7 +3093,6 @@ function submitExam(examId, answers) {
   else if (score >= 6) msg = '👍 Good job! Review the questions you missed and try again.';
   else if (score >= 4) msg = '📚 Keep practicing! Focus on reading strategies and vocabulary.';
   else msg = '💪 Don\'t give up! Re-read the passage and study the vocabulary section.';
-
   msgEl.textContent = msg;
   scoreEl.classList.add('show');
   scoreEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -3149,135 +3106,72 @@ function resetExam(examId) {
     const label = input.closest('.exam-option');
     label.classList.remove('correct-ans', 'wrong-ans');
   });
-  const scoreEl = document.getElementById(examId + '-score');
-  if (scoreEl) scoreEl.classList.remove('show');
+  document.getElementById(examId + '-score')?.classList.remove('show');
 }
 
 // ===================== PROGRESS =====================
 function incrementProgress(n = 1) {
   totalAnswered = Math.min(totalAnswered + n, totalQuestions);
   const pct = Math.round((totalAnswered / totalQuestions) * 100);
-  document.getElementById('globalProgress').style.width = pct + '%';
-  document.getElementById('progressText').textContent = pct + '%';
+  const globalProgress = document.getElementById('globalProgress');
+  const progressText = document.getElementById('progressText');
+  if (globalProgress) globalProgress.style.width = pct + '%';
+  if (progressText) progressText.textContent = pct + '%';
   const countEl = document.getElementById('answeredCount');
   if (countEl) countEl.textContent = totalAnswered;
 }
 
 // ===================== KEYBOARD NAV =====================
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeSidebar();
-});
-/* ---------- NATIONAL EXAMS FILTER ---------- */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+// ===================== NATIONAL EXAMS FILTER =====================
 (function() {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const examCards = document.querySelectorAll('.exam-card');
   if (!filterButtons.length || !examCards.length) return;
-
   function filterExams(year) {
     examCards.forEach(card => {
-      if (year === 'all' || card.dataset.year === year) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+      card.classList.toggle('hidden', year !== 'all' && card.dataset.year !== year);
     });
   }
-
-  function setActiveButton(activeBtn) {
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    activeBtn.classList.add('active');
-  }
-
   filterButtons.forEach(btn => {
     btn.addEventListener('click', function() {
-      const year = this.dataset.year;
-      filterExams(year);
-      setActiveButton(this);
+      filterExams(this.dataset.year);
+      filterButtons.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
     });
   });
-
-  // Ensure "All Years" is active by default
-  const defaultActive = document.querySelector('.filter-btn.active');
-  if (!defaultActive) {
-    const allBtn = document.querySelector('.filter-btn[data-year="all"]');
-    if (allBtn) allBtn.classList.add('active');
-  }
+  document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn[data-year="all"]')?.classList.add('active');
 })();
-/* ---------- DARK MODE TOGGLE FUNCTIONALITY ---------- */
-/* Add this script at the end of your existing JavaScript section, or in a separate file. */
 
+// ===================== DARK MODE TOGGLE =====================
 (function() {
   const toggleBtn = document.getElementById('darkModeToggle');
   if (!toggleBtn) return;
-
   const htmlElement = document.documentElement;
   const iconSpan = toggleBtn.querySelector('.toggle-icon');
   const textSpan = toggleBtn.querySelector('.toggle-text');
-
-  // Check for saved user preference
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark') {
     htmlElement.classList.add('dark');
-    iconSpan.textContent = '☀️';
-    textSpan.textContent = 'Light';
-  } else {
-    htmlElement.classList.remove('dark');
-    iconSpan.textContent = '🌙';
-    textSpan.textContent = 'Dark';
+    if (iconSpan) iconSpan.textContent = '☀️';
+    if (textSpan) textSpan.textContent = 'Light';
   }
-
-  // Toggle on button click
   toggleBtn.addEventListener('click', () => {
     const isDark = htmlElement.classList.toggle('dark');
-    if (isDark) {
-      iconSpan.textContent = '☀️';
-      textSpan.textContent = 'Light';
-      localStorage.setItem('theme', 'dark');
-    } else {
-      iconSpan.textContent = '🌙';
-      textSpan.textContent = 'Dark';
-      localStorage.setItem('theme', 'light');
-    }
+    iconSpan.textContent = isDark ? '☀️' : '🌙';
+    textSpan.textContent = isDark ? 'Light' : 'Dark';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 })();
-// Back to Top Button
+
+// ===================== BACK TO TOP =====================
 (function() {
   const btn = document.getElementById('backToTop');
   if (!btn) return;
-  
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      btn.classList.add('show');
-    } else {
-      btn.classList.remove('show');
-    }
-  });
-  
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  window.addEventListener('scroll', () => btn.classList.toggle('show', window.scrollY > 300));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
-// قفل تمرير الصفحة عند فتح القائمة (يحسن تجربة الجوال)
-function lockBodyScroll(lock) {
-  document.body.style.overflow = lock ? 'hidden' : '';
-}
-
-// عدّل دوال openSidebar و closeSidebar الموجودة
-function openSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  sidebar.classList.add('open');
-  overlay.classList.add('show');
-  lockBodyScroll(true);
-}
-
-function closeSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  sidebar.classList.remove('open');
-  overlay.classList.remove('show');
-  lockBodyScroll(false);
-}
 </script>
 </body>
  
