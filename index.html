@@ -2890,6 +2890,8 @@
 let totalAnswered = 0;
 let totalQuestions = 60;
 
+import { Analytics } from "@vercel/analytics/next"
+  
 // ===================== HELPER: LOCK BODY SCROLL =====================
 function lockBodyScroll(lock) {
   document.body.style.overflow = lock ? 'hidden' : '';
