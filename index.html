@@ -2884,13 +2884,15 @@
     </div>
   </footer>
 </main>
-
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/<unique-path>/script.js"></script>
 <script>
 // ===================== GLOBAL VARIABLES =====================
 let totalAnswered = 0;
 let totalQuestions = 60;
 
-import { Analytics } from "@vercel/analytics/next"
   
 // ===================== HELPER: LOCK BODY SCROLL =====================
 function lockBodyScroll(lock) {
